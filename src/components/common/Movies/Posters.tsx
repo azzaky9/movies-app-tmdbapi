@@ -1,16 +1,10 @@
 import { PlayArrow, BookmarkAddOutlined, KeyboardArrowDown } from "@mui/icons-material";
-import { SkeletonText } from "../../../lib/Skeletons";
 import { Tooltip } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
-const Posters = ({
-  title,
-  date,
-  isLoading,
-}: {
-  title: string;
-  date: string;
-  isLoading: boolean;
-}) => {
+const Posters = ({ id, title, date }: { title: string; date: string; id: number }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <div className='absolute bottom-0 w-full p-3'>
       <h3 className='text-[15.2px] text-start mb-4 flex flex-col gap-1'>

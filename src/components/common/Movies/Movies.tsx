@@ -1,6 +1,5 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { SkeletonText, CoverSkeleton } from "../../../lib/Skeletons";
-import { Skeleton, Stack } from "@mui/material";
+import { CoverSkeleton } from "../../../lib/Skeletons";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
 import "./posters.css";
@@ -30,7 +29,7 @@ const Movies: React.FC<PropTypes> = ({ data, isLoading }) => {
         pagination: false,
         gap: "2rem",
       }}
-      aria-label='My Favorite Images'>
+      aria-label='Movies List'>
       {isLoading
         ? dummy.map((d, i) => (
             <SplideSlide key={i}>
@@ -39,16 +38,16 @@ const Movies: React.FC<PropTypes> = ({ data, isLoading }) => {
               {d}
             </SplideSlide>
           ))
-        : data?.map(({ poster_path, release_date, title }, index) => (
+        : data?.map(({ id, poster_path, release_date, title }, index) => (
             <SplideSlide
               className='group bg-input-only rounded-2xl'
               key={index}>
               <MoviesDetails
-                component_count={index + 1}
-                title_poster={title}
-                source_poster={poster_path}
-                release_date={release_date}
-                isLoading={isLoading}
+                idMovies={id}
+                componentCount={index + 1}
+                titlePoster={title}
+                sourcePoster={poster_path}
+                releaseDate={release_date}
               />
             </SplideSlide>
           ))}
