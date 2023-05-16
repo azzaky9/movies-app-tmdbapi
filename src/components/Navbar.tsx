@@ -10,7 +10,7 @@ const Navbar = () => {
   const lists: { text: string; path: string }[] = [
     {
       text: "Home",
-      path: "/home/discover",
+      path: "/home",
     },
     {
       text: "TV Show",
