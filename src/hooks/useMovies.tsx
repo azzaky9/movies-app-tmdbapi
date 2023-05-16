@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-export const useFetch = (urls: string[]) => {
+export const useMovies = (urls: string[]) => {
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>("");
