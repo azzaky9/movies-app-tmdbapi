@@ -15,12 +15,7 @@ const HomeComponent = memo(function HomeComponent() {
     <Stack gap={5}>
       <div>
         <div className='flex justify-between py-8 '>
-          <h2 className='text-2xl font-semibold px-1'>Top 10 </h2>
-          <Link
-            className='text-accent'
-            to='/movies'>
-            See All
-          </Link>
+          <h2 className='text-2xl font-semibold px-1'>Top 10 Movies</h2>
         </div>
         <Movies
           data={data[0]?.results?.slice(0, 10)}
@@ -30,7 +25,7 @@ const HomeComponent = memo(function HomeComponent() {
       <div>
         <div className='flex justify-between py-8 '>
           <h2 className='text-2xl font-semibold px-1'>
-            Popular Of The Week <WhatshotOutlined className='text-accent' />
+            Trending Movies <WhatshotOutlined className='text-accent' />
           </h2>
           <Link
             className='text-accent'
