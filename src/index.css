@@ -29,3 +29,7 @@ input {
 .smooth-transition {
   transition: cubic-bezier(0.47, 0, 0.745, 0.715) 200ms;
 }
+
+.navbar-link.active {
+  @apply text-accent;
+}
