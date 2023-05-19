@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 interface GenrePropTypes {
   lists: (string | number)[];
