@@ -1,24 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { CoverSkeleton } from "../../../lib/Skeletons";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
-import "./posters.css";
+import "./MoviesInfo.css";
 
-import MoviesDetails from "./Details";
+import MoviesDetails from "./MoviesDetails";
+import { MoviesDataTypes } from "../../../types";
 
-interface PropTypes {
-  data: {
-    id: number;
-    adult: boolean;
-    poster_path: string;
-    release_date: string;
-    title: string;
-  }[];
-
-  isLoading: boolean;
-}
-
-const Movies: React.FC<PropTypes> = ({ data, isLoading }) => {
+const Movies: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
   const dummy = new Array(4).fill("");
 
   return (
@@ -38,7 +30,7 @@ const Movies: React.FC<PropTypes> = ({ data, isLoading }) => {
               {d}
             </SplideSlide>
           ))
-        : data?.map(({ id, poster_path, release_date, title }, index) => (
+        : data?.map(({ id, poster_path, release_date, title, genre_ids }, index) => (
             <SplideSlide
               className='group bg-input-only rounded-2xl'
               key={index}>
@@ -48,6 +40,7 @@ const Movies: React.FC<PropTypes> = ({ data, isLoading }) => {
                 titlePoster={title}
                 sourcePoster={poster_path}
                 releaseDate={release_date}
+                genreList={genre_ids}
               />
             </SplideSlide>
           ))}
