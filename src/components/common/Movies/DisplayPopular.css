@@ -1,0 +1,20 @@
+.splide__custom--style svg {
+  fill: white !important;
+  font-size: 0.699rem;
+  padding: 11px;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.splide__custom--style svg:hover {
+  fill: black !important;
+
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.splide__custom--style.splide__arrow--prev svg {
+  position: absolute !important;
+  right: 0;
+}
