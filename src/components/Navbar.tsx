@@ -1,16 +1,14 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SearchInput from "./common/Navbar/SearchInput";
 import { IconButton } from "@mui/material";
 import { Notifications } from "@mui/icons-material";
 import UserProfile from "./common/Navbar/UserProfile";
 
 const Navbar = () => {
-  const location = useLocation();
-
   const lists: { text: string; path: string }[] = [
     {
       text: "Home",
-      path: "/home",
+      path: "/",
     },
     {
       text: "TV Show",
@@ -33,9 +31,9 @@ const Navbar = () => {
           <NavLink
             to={path}
             key={index}
-            className={`text-base ${
-              location.pathname === path ? "text-accent" : "text-secondary"
-            } hover-link ${text === "TV Show" ? "w-[67px]" : ""} `}>
+            className={`navbar-link text-secondary hover-link ${
+              text === "TV Show" ? "w-[67px]" : ""
+            } `}>
             {text}
           </NavLink>
         ))}
