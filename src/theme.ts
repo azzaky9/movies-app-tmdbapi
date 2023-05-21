@@ -1,17 +1,25 @@
 import { createTheme } from "@mui/material";
 
 declare module "@mui/material/styles" {
-  interface Theme {
-    secondary: {
-      main: string;
-    };
+  interface Palette {
+    neutral: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    neutral?: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/IconButton" {
+  interface IconButtonPropsColorOverrides {
+    neutral: true;
   }
 }
 
 export const theme = createTheme({
   palette: {
-    secondary: {
-      main: "#717171",
+    neutral: {
+      main: "#ffffff",
     },
   },
 });
