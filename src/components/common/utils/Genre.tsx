@@ -1,39 +1,33 @@
-import { useEffect, useState } from "react";
+import { useGenre } from "../../../hooks/useGenre";
 
 interface GenrePropTypes {
   lists: (string | number)[];
   model: "portrait" | "landscape";
 }
 
-const Genre: React.FC<GenrePropTypes> = ({ lists, model }) => {
-  const [genreList, setGenreList] = useState<{ id: number; name: string }[]>([]);
+const Genre: React.FC<GenrePropTypes> = ({ model, lists }) => {
+  const { genreNames } = useGenre(lists);
 
-  const getGenre = async () => {
-    const url =
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=6ec04232daa57ba5165114bab7c10f0c";
-    const res = await fetch(url);
-    const data = await res.json();
+  if (model === "landscape") {
+    return (
+      <ul className='flex flex-wrap gap-1 py-2'>
+        {genreNames?.map((item, index) => (
+          <li
+            key={index}
+            className=''>
+            {item?.name}
+          </li>
+        ))}
 
-    setGenreList(data.genres);
-  };
-
-  useEffect(() => {
-    getGenre();
-  }, []);
-
-  const renderGenre = lists?.map((id) => {
-    const valueFromArr = genreList.find((item) => item.id === id);
-
-    return valueFromArr;
-  });
+        <span className='text-accent'>&#8226; Movies</span>
+      </ul>
+    );
+  }
 
   return (
-    <ul className={`flex gap-x-2 flex-wrap ${model === "portrait" ? "py-1" : "py-2"} text-sm`}>
-      {renderGenre?.map((item) => (
-        <li>{item?.name}</li>
-      ))}
-      &#x2022;
-      {model === "landscape" ? <span className='text-accent font-semibold'>Movies</span> : null}
+    <ul className='text-sm flex gap-1 py-2 text-accent'>
+      <li>{genreNames[0]?.name} /</li>
+      <li>{genreNames[1]?.name}</li>
     </ul>
   );
 };

@@ -1,9 +1,15 @@
 import "../Movies/MoviesInfo.css";
 
-export const PortraitShadow = () => {
-  return <div className='portrait_inners'></div>;
+const innerShadow = ({ model }: { model: "landscape" | "portrait" }) => {
+  return (
+    <>
+      {model === "landscape" ? (
+        <div className='landscape_inners'></div>
+      ) : (
+        <div className='portrait_inners'></div>
+      )}
+    </>
+  );
 };
 
-export const LandscapeShadow = () => {
-  return <div className='landscape_inners'></div>;
-};
+export default innerShadow;
