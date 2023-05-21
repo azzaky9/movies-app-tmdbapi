@@ -1,24 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 
+import { memo } from "react";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import { MoviesDataTypes } from "../../../types";
 import { EastOutlined } from "@mui/icons-material";
-import { LandscapeShadow } from "../utils/InnerShadow";
+import { InnerShadow } from "../utils";
 
 import DisplayInfo from "./DisplayInfo";
 import "@splidejs/react-splide/css";
 import "./DisplayPopular.css";
 
-const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
+const DisplayPopular: React.FC<MoviesDataTypes> = memo(({ data }) => {
   return (
     <Splide
       options={{
         rewind: true,
-        type: "loop",
-        autoplay: true,
         pagination: false,
-        interval: 3400,
       }}
       tag='section'
       aria-label='popular_slide'
@@ -32,7 +30,7 @@ const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
                 src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
                 alt={`poster-for-${id}`}
               />
-              <LandscapeShadow />
+              <InnerShadow model='landscape' />
               <DisplayInfo
                 date={release_date}
                 title={title}
@@ -54,6 +52,6 @@ const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
       </div>
     </Splide>
   );
-};
+});
 
 export default DisplayPopular;

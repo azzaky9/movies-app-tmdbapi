@@ -16,7 +16,10 @@ export const BookmarkButton = () => {
 const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre }) => {
   return (
     <div className='absolute bottom-0 w-full p-3'>
-      <Genre lists={genre} />
+      <Genre
+        lists={genre}
+        model='portrait'
+      />
       <Title
         title={title}
         date={date}

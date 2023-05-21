@@ -8,7 +8,10 @@ const DisplayInfo: React.FC<InfoPropTypes> = ({ date, title, rating, genre }) =>
   return (
     <>
       <div className='w-[300px] text-white p-10 absolute bottom-0 z-40'>
-        <Genre lists={genre} />
+        <Genre
+          lists={genre}
+          model='landscape'
+        />
         <Title
           date={date}
           title={title}

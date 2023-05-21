@@ -21,8 +21,20 @@
 }
 
 .expand {
-  @apply group-hover:max-h-[180px];
+  @apply group-hover:max-h-[120px];
 
   transition: all ease-in-out 250ms;
   max-height: 330px;
+}
+
+.splide__arrow {
+  background-color: transparent !important;
+}
+
+.idx .splide__arrow {
+  font-size: 2rem;
+}
+
+.idx .splide__arrow svg {
+  fill: white;
 }

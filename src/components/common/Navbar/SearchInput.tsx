@@ -9,7 +9,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className='flex max-w-[643px] min-w-[300px] w-full rounded-xl bg-input-only'>
+    <div className='flex w-full rounded-xl bg-input-only'>
       <span className={`py-[14px] pl-[14px] ${input.length > 0 ? "text-white" : "text-secondary"}`}>
         <SearchOutlined />
       </span>

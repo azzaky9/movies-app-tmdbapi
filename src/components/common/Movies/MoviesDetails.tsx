@@ -1,5 +1,5 @@
 import React from "react";
-import { PortraitShadow } from "../utils/InnerShadow";
+import { InnerShadow } from "../utils";
 import MoviesInfo from "./MoviesInfo";
 
 interface MoviesDetailsProps {
@@ -41,7 +41,7 @@ const MoviesDetails: React.FC<MoviesDetailsProps> = ({
           style={{ WebkitTextStroke: "2px white" }}>
           {componentCount}
         </span>
-        <PortraitShadow />
+        <InnerShadow model='portrait' />
       </div>
     </div>
   );
