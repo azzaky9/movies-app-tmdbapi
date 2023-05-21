@@ -26,13 +26,13 @@ export const SkeletonText: React.FC<PropTypes> = ({ count, size, skeletonSizeLis
 
 export const CoverSkeleton = () => {
   return (
-    <div className='h-[330px]'>
-      <div className='bg-input-only w-[210px] max-w-[400px] h-[300px] rounded-xl pt-2'>
+    <div className='h-[330px] '>
+      <div className='bg-zinc-900 w-[220px] max-w-[400px] h-[320px] rounded-xl p-2 pt-5'>
         <Skeleton
           variant='rectangular'
           animation='wave'
           height='190px'
-          sx={{ mx: 1 }}
+          sx={{ mx: 1, borderRadius: "12px" }}
         />
         <SkeletonText
           count={4}
