@@ -2,15 +2,15 @@ import { useEffect, useState, useCallback } from "react";
 
 export const useGenre = (lists: (string | number)[]) => {
   const [genreList, setGenreList] = useState<{ id: number; name: string }[]>([]);
+  const url =
+    "https://api.themoviedb.org/3/genre/movie/list?api_key=6ec04232daa57ba5165114bab7c10f0c";
 
   const getGenre = useCallback(async () => {
-    const url =
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=6ec04232daa57ba5165114bab7c10f0c";
     const res = await fetch(url);
     const data = await res.json();
 
     setGenreList(data.genres);
-  }, [genreList]);
+  }, [url]);
 
   useEffect(() => {
     getGenre();
