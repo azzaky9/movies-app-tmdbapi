@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-
 import { memo } from "react";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import { MoviesDataTypes } from "../../../types";
@@ -11,17 +8,10 @@ import DisplayInfo from "./DisplayInfo";
 import "@splidejs/react-splide/css";
 import "./DisplayPopular.css";
 
-const DisplayPopular: React.FC<MoviesDataTypes> = memo(({ data }) => {
-  return (
-    <Splide
-      options={{
-        rewind: true,
-        pagination: false,
-      }}
-      tag='section'
-      aria-label='popular_slide'
-      hasTrack={false}>
-      <SplideTrack>
+const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
+  const DisplayValue = memo(() => {
+    return (
+      <>
         {data?.map(({ id, backdrop_path, release_date, title, vote_average, genre_ids }, index) => (
           <SplideSlide key={index}>
             <div className='group'>
@@ -40,6 +30,21 @@ const DisplayPopular: React.FC<MoviesDataTypes> = memo(({ data }) => {
             </div>
           </SplideSlide>
         ))}
+      </>
+    );
+  });
+
+  return (
+    <Splide
+      options={{
+        rewind: true,
+        pagination: false,
+      }}
+      tag='section'
+      aria-label='popular_slide'
+      hasTrack={false}>
+      <SplideTrack>
+        <DisplayValue />
       </SplideTrack>
 
       <div className='splide__arrows wrapper__splide--custom absolute w-[130px] right-10 bottom-14'>
@@ -52,6 +57,6 @@ const DisplayPopular: React.FC<MoviesDataTypes> = memo(({ data }) => {
       </div>
     </Splide>
   );
-});
+};
 
 export default DisplayPopular;
