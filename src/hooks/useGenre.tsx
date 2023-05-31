@@ -13,7 +13,9 @@ export const useGenre = (lists: (string | number)[]) => {
   }, [url]);
 
   useEffect(() => {
-    getGenre();
+    return () => {
+      getGenre();
+    };
   }, []);
 
   const genreNames = lists?.map((id) => {

@@ -5,13 +5,15 @@ import HomePage from "../pages/HomePage";
 
 const Layout = () => {
   const location = useLocation();
+  const currentLocation = location.pathname;
 
   return (
     <div className='w-full flex relative'>
       <Sidebar />
       <div className='flex flex-col w-full'>
         <Navbar />
-        {location.pathname === "/" ? <HomePage /> : <Outlet />}
+        {currentLocation === "/" ? <HomePage /> : <Outlet />}
+        <Outlet />
       </div>
     </div>
   );

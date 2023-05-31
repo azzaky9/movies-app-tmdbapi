@@ -15,7 +15,7 @@ const Movies: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
       <>
         {data?.map(({ id, poster_path, release_date, title, genre_ids }, index) => (
           <SplideSlide
-            className='group bg-input-only rounded-2xl max-w-[208px]'
+            className='group bg-input-only rounded-2xl max-w-[208px] '
             key={index}>
             <MoviesDetails
               idMovies={id}
@@ -31,17 +31,25 @@ const Movies: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
     );
   });
 
+  const RenderSkeletonLoad = memo(() => {
+    return (
+      <>
+        {dummy.map((d, i) => (
+          <div key={i}>
+            <CoverSkeleton />
+            {/* ignore this "d" not affected anything just because linter dont throw error in production */}
+            {d}
+          </div>
+        ))}
+      </>
+    );
+  });
+
   return (
     <>
       {isLoading ? (
         <div className='flex gap-8'>
-          {dummy.map((d, i) => (
-            <div key={i}>
-              <CoverSkeleton />
-              {/* ignore this "d" not affected anything just because linter dont throw error in production */}
-              {d}
-            </div>
-          ))}
+          <RenderSkeletonLoad />
         </div>
       ) : (
         <Splide

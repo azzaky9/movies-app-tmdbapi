@@ -8,9 +8,19 @@ interface GenrePropTypes {
 const Genre: React.FC<GenrePropTypes> = ({ model, lists }) => {
   const { genreNames } = useGenre(lists);
 
-  if (model === "landscape") {
+  const RenderPortraitRatioELement = () => {
     return (
-      <ul className='flex flex-wrap gap-1 py-2'>
+      <ul className='text-sm py-2 text-accent'>
+        <li>
+          {genreNames[0]?.name} / {genreNames[1]?.name}
+        </li>
+      </ul>
+    );
+  };
+
+  const RenderLandscapeRatioElement = () => {
+    return (
+      <ul className='flex flex-wrap gap-2 py-2'>
         {genreNames?.map((item, index) => (
           <li
             key={index}
@@ -22,13 +32,10 @@ const Genre: React.FC<GenrePropTypes> = ({ model, lists }) => {
         <span className='text-accent'>&#8226; Movies</span>
       </ul>
     );
-  }
+  };
 
   return (
-    <ul className='text-sm flex gap-1 py-2 text-accent'>
-      <li>{genreNames[0]?.name} /</li>
-      <li>{genreNames[1]?.name}</li>
-    </ul>
+    <>{model === "landscape" ? <RenderLandscapeRatioElement /> : <RenderPortraitRatioELement />}</>
   );
 };
 

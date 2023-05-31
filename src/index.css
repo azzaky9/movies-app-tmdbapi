@@ -33,3 +33,7 @@ input {
 .navbar-link.active {
   @apply text-accent;
 }
+
+input {
+  @apply text-black;
+}

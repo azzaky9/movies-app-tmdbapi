@@ -20,6 +20,7 @@ export const useMovies = (urls: string[]) => {
 
   useEffect(() => {
     fetchAPI();
+    // eslint-disable-next-line
   }, []);
 
   return { data, error, isLoading };

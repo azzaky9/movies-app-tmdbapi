@@ -23,7 +23,7 @@ const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre }) => {
       <Title
         title={title}
         date={date}
-        size='15.2px'
+        size='medium'
       />
 
       <div className='flex justify-between'>

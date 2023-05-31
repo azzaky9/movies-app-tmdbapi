@@ -20,7 +20,7 @@ const MoviesDetails: React.FC<MoviesDetailsProps> = ({
   genreList,
 }) => {
   return (
-    <div className='group transition-all duration-200 rounded-2xl'>
+    <div className='group transition-all duration-200 rounded-2xl sm:h-[200px] sm:w-[120px]'>
       <MoviesInfo
         genre={genreList}
         id={idMovies}

@@ -161,7 +161,7 @@ export default function PrimarySearchAppBar() {
         position='static'
         color='transparent'
         sx={{ p: 2.9 }}>
-        <Toolbar>
+        <Toolbar sx={{ paddingLeft: "45px" }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useMovies } from "../hooks/useMovies";
 import { WhatshotOutlined } from "@mui/icons-material";
 import { Stack } from "@mui/material";
-import DisplayPopular from "./common/Movies/DisplayPopular";
+import DisplayPopular from "./common/Banner/DisplayPopular";
 import Movies from "./common/Movies/Movies";
 import LinkAll from "./common/utils/LinkAll";
 
@@ -31,7 +31,7 @@ const HomeComponent = memo(function HomeComponent() {
           <h2 className='text-2xl font-semibold px-1'>Top 10 Movies</h2>
         </div>
         <Movies
-          data={data[0]?.results?.slice(10, 20)}
+          data={data[0]?.results?.slice(0, 10)}
           isLoading={isLoading}
         />
       </div>

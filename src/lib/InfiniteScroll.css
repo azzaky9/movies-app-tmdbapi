@@ -1,0 +1,14 @@
+.animate_infinite--scroll {
+  position: absolute;
+  float: left;
+  animation: marque-effect 15s linear infinite;
+}
+
+@keyframes marque-effect {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -800%;
+  }
+}

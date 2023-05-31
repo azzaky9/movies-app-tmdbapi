@@ -39,6 +39,10 @@ const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
       options={{
         rewind: true,
         pagination: false,
+        autoplay: true,
+        interval: 4000,
+        lazyLoad: true,
+        gap: "42px",
       }}
       tag='section'
       aria-label='popular_slide'
