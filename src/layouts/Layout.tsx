@@ -11,7 +11,12 @@ const Layout = () => {
       <Sidebar />
       <div className='flex flex-col w-full'>
         <Navbar />
-        {currentLocation === "/" ? <Navigate to='/homepage' /> : <Outlet />}
+        {currentLocation === "/" ? (
+          <Navigate
+            to='/homepage'
+            replace={true}
+          />
+        ) : null}
         <Outlet />
       </div>
     </div>
