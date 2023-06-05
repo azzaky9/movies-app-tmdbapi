@@ -1,16 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
-
-interface ListMenuTypes {
-  menuList: {
-    names: string;
-    childList: {
-      name: string;
-      path: string;
-      icons: JSX.Element;
-    }[];
-  }[];
-}
+import { ListMenuTypes } from "@/types";
 
 const Menu: React.FC<ListMenuTypes> = ({ menuList }) => {
   return (

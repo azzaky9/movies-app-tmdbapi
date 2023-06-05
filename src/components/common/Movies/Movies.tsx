@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { CoverSkeleton } from "../../../lib/Skeletons";
+import { CoverSkeleton } from "@/lib/Skeletons";
 import "@splidejs/react-splide/css";
 
-import "./MoviesInfo.css";
+import "@/components/common/Movies/MoviesInfo.css";
 
-import MoviesDetails from "./MoviesDetails";
-import { MoviesDataTypes } from "../../../types";
+import MoviesDetails from "@/components/common/Movies/MoviesDetails";
+import { MoviesDataTypes } from "@/types";
 
 const Movies: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
   const dummy = new Array(5).fill("");

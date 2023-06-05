@@ -1,7 +1,7 @@
-import { InfoPropTypes } from "../../../types";
-import { BookmarkButton } from "../Movies/MoviesInfo";
+import { InfoPropTypes } from "@/types";
+import { BookmarkButton } from "@/components/common/Movies/MoviesInfo";
 import { PlayArrow } from "@mui/icons-material";
-import { Title, Genre } from "../utils";
+import { Title, Genre } from "@/components/common/utils";
 import imdbLogo from "/imdb-logo.svg";
 
 const DisplayInfo: React.FC<InfoPropTypes> = ({ date, title, rating, genre }) => {

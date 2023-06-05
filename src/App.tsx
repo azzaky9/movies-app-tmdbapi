@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import { route } from "./route";
+import { route } from "@/route";
 import { useMediaQuery, Snackbar, Alert, Slide, IconButton } from "@mui/material";
 import { Close, WarningAmberOutlined } from "@mui/icons-material";
 

@@ -20,3 +20,14 @@ export interface MoviesDataTypes {
 
   isLoading: boolean;
 }
+
+export interface ListMenuTypes {
+  menuList: {
+    names: string;
+    childList: {
+      name: string;
+      path: string;
+      icons: JSX.Element;
+    }[];
+  }[];
+}

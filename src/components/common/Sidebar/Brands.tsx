@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import Logo from "/navbar-logo.svg";
 
-const Brands = ({ size }: { size?: "base" | "large" }) => {
+type BrandsPropTypes = {
+  size?: "base" | "large";
+};
+
+const Brands: React.FC<BrandsPropTypes> = ({ size }) => {
   return (
     <div className='relative w-[185px] h-[58px]'>
       <Link

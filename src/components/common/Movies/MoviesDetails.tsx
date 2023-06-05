@@ -1,5 +1,5 @@
 import React from "react";
-import { InnerShadow } from "../utils";
+import { InnerShadow } from "@/components/common/utils";
 import MoviesInfo from "./MoviesInfo";
 
 interface MoviesDetailsProps {

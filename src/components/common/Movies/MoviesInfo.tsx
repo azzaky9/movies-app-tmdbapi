@@ -1,7 +1,7 @@
 import { PlayArrow, BookmarkAddOutlined, KeyboardArrowDown } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
-import { InfoPropTypes } from "../../../types";
-import { Title, Genre } from "../utils";
+import { InfoPropTypes } from "@/types";
+import { Title, Genre } from "@/components/common/utils";
 
 export const BookmarkButton = () => {
   return (

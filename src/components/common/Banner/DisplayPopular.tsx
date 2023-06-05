@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
-import { MoviesDataTypes } from "../../../types";
+import { MoviesDataTypes } from "@/types";
 import { EastOutlined } from "@mui/icons-material";
-import { InnerShadow } from "../utils";
+import { InnerShadow } from "@/components/common/utils";
 
 import DisplayInfo from "./DisplayInfo";
 import "@splidejs/react-splide/css";
