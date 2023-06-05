@@ -1,7 +1,6 @@
-import { Outlet, useLocation } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
-import HomePage from "../pages/HomePage";
+import { Outlet, useLocation, Navigate } from "react-router-dom";
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 
 const Layout = () => {
   const location = useLocation();
@@ -12,7 +11,7 @@ const Layout = () => {
       <Sidebar />
       <div className='flex flex-col w-full'>
         <Navbar />
-        {currentLocation === "/" ? <HomePage /> : <Outlet />}
+        {currentLocation === "/" ? <Navigate to='/homepage' /> : <Outlet />}
         <Outlet />
       </div>
     </div>
