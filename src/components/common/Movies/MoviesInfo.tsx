@@ -1,7 +1,8 @@
 import { PlayArrow, BookmarkAddOutlined, KeyboardArrowDown } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import { InfoPropTypes } from "@/types";
-import { Title, Genre } from "@/components/common/utils";
+import { Title } from "@/components/common/utils";
+import { useGenre } from "@/hooks/useGenre";
 
 export const BookmarkButton = () => {
   return (
@@ -14,12 +15,15 @@ export const BookmarkButton = () => {
 };
 
 const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre }) => {
+  const { genreNames } = useGenre(genre);
+
+  const genreText =
+    genreNames?.length > 1 ? `${genreNames[0]} / ${genreNames[1]}` : `${genreNames[0]}`;
+
+  console.log(genreNames);
   return (
     <div className='absolute bottom-0 w-full p-3'>
-      <Genre
-        lists={genre}
-        model='portrait'
-      />
+      <span className='text-accent pb-2'>{genreText}</span>
       <Title
         title={title}
         date={date}

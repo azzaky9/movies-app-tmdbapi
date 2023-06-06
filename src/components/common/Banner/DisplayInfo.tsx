@@ -1,17 +1,21 @@
 import { InfoPropTypes } from "@/types";
 import { BookmarkButton } from "@/components/common/Movies/MoviesInfo";
 import { PlayArrow } from "@mui/icons-material";
-import { Title, Genre } from "@/components/common/utils";
+import { Title } from "@/components/common/utils";
+import { useGenre } from "@/hooks/useGenre";
 import imdbLogo from "/imdb-logo.svg";
 
 const DisplayInfo: React.FC<InfoPropTypes> = ({ date, title, rating, genre }) => {
+  const { genreNames } = useGenre(genre);
+
   return (
     <>
       <div className='w-[400px] text-white p-10 absolute bottom-0 z-40'>
-        <Genre
-          lists={genre.slice(0, 2)}
-          model='landscape'
-        />
+        <ul className='flex gap-3'>
+          <li>{genreNames[0]}</li>
+          <li>{genreNames[1]}</li>
+          <span className='text-accent'>&middot; Movies</span>{" "}
+        </ul>
         <Title
           date={date}
           title={title}

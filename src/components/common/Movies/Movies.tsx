@@ -9,7 +9,7 @@ import MoviesDetails from "@/components/common/Movies/MoviesDetails";
 import { MoviesDataTypes } from "@/types";
 
 const Movies: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
-  const dummy = new Array(5).fill("");
+  const dummy = new Array(6).fill("");
   const MoviesValueComponent = memo(() => {
     return (
       <>
