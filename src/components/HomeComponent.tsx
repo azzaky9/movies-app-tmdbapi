@@ -5,17 +5,26 @@ import { Stack } from "@mui/material";
 import DisplayPopular from "./common/Banner/DisplayPopular";
 import Movies from "./common/Movies/Movies";
 import LinkAll from "./common/utils/LinkAll";
+import { StructuredReponseSource } from "@/types";
+
+type TMoviesResponse = {
+  page: number;
+  results: StructuredReponseSource[];
+  total_pages: number;
+};
 
 const HomeComponent = memo(function HomeComponent() {
-  const { data, isLoading } = useMovies([
-    "https://api.themoviedb.org/3/movie/popular?api_key=6ec04232daa57ba5165114bab7c10f0c&language=en-US&page=1",
-    "https://api.themoviedb.org/3/trending/all/day?api_key=6ec04232daa57ba5165114bab7c10f0c",
+  const key = import.meta.env.VITE_API_KEY;
+
+  const { data, isLoading } = useMovies<TMoviesResponse>([
+    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`,
+    `https://api.themoviedb.org/3/trending/all/day?api_key=${key}`,
   ]);
 
   return (
     <Stack
       gap={5}
-      sx={{ p: 3 }}>
+      sx={{ p: 6 }}>
       <div>
         <div className='flex justify-between pb-8'>
           <h2 className='text-2xl font-semibold px-1'>Popular Now</h2>

@@ -3,6 +3,7 @@ import { Tooltip } from "@mui/material";
 import { InfoPropTypes } from "@/types";
 import { Title } from "@/components/common/utils";
 import { useGenre } from "@/hooks/useGenre";
+import { useNavigate } from "react-router-dom";
 
 export const BookmarkButton = () => {
   return (
@@ -14,13 +15,13 @@ export const BookmarkButton = () => {
   );
 };
 
-const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre }) => {
+const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
   const { genreNames } = useGenre(genre);
+  const navigate = useNavigate();
 
   const genreText =
     genreNames?.length > 1 ? `${genreNames[0]} / ${genreNames[1]}` : `${genreNames[0]}`;
 
-  console.log(genreNames);
   return (
     <div className='absolute bottom-0 w-full p-3'>
       <span className='text-accent pb-2'>{genreText}</span>
@@ -32,7 +33,9 @@ const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre }) => {
 
       <div className='flex justify-between'>
         <div className='flex gap-3'>
-          <button className='smooth-transition bg-accent w-10 h-10 bg-opacity-10 rounded-full hover:bg-opacity-100 hover:cursor-pointer'>
+          <button
+            onClick={() => navigate(`/movies/${id}`)}
+            className='smooth-transition bg-accent w-10 h-10 bg-opacity-10 rounded-full hover:bg-opacity-100 hover:cursor-pointer'>
             <Tooltip title='Detail Movies'>
               <PlayArrow className='smooth-transition text-accent hover:text-primary' />
             </Tooltip>

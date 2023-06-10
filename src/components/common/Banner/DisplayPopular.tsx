@@ -22,6 +22,7 @@ const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
               />
               <InnerShadow model='landscape' />
               <DisplayInfo
+                id={id}
                 date={release_date}
                 title={title}
                 rating={vote_average}
