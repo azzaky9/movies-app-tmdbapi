@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-export const useMovies = (urls: string[]) => {
-  const [data, setData] = useState<any[]>([]);
+export const useMovies = function <T>(urls: string[]) {
+  const [data, setData] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>("");
 
