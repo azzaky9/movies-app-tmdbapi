@@ -18,7 +18,7 @@ const HomeComponent = memo(function HomeComponent() {
 
   const { data, isLoading } = useMovies<TMoviesResponse>([
     `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`,
-    `https://api.themoviedb.org/3/trending/all/day?api_key=${key}`,
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`,
   ]);
 
   return (
@@ -37,10 +37,10 @@ const HomeComponent = memo(function HomeComponent() {
       </div>
       <div>
         <div className='flex justify-between py-8 '>
-          <h2 className='text-2xl font-semibold px-1'>Top 10 Movies</h2>
+          <h2 className='text-2xl font-semibold px-1'>Top 10 Rated Movies</h2>
         </div>
         <Movies
-          data={data[0]?.results?.slice(0, 10)}
+          data={data[1]?.results?.slice(0, 10)}
           isLoading={isLoading}
         />
       </div>
@@ -52,7 +52,7 @@ const HomeComponent = memo(function HomeComponent() {
           <LinkAll destination='/trending-movies' />
         </div>
         <Movies
-          data={data[1]?.results?.slice(0, 10)}
+          data={data[0]?.results?.slice(0, 10)}
           isLoading={isLoading}
         />
       </div>
