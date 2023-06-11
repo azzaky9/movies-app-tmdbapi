@@ -3,6 +3,8 @@ import ReactPlayer from "react-player";
 import { useEffect, useState, memo } from "react";
 import { useMovies } from "@/hooks/useMovies";
 import { StructuredReponseSource } from "@/types";
+import { TMoviesResponse } from "./HomeComponent";
+import Movies from "./common/Movies/Movies";
 
 interface SourceVideoMovies {
   key: string;
@@ -32,13 +34,13 @@ interface DetailSourceMovies extends StructuredReponseSource {
 const ShowDetail = memo(() => {
   const key = import.meta.env.VITE_API_KEY;
   const { moviesId } = useParams();
-  const { data } = useMovies<DetailSourceMovies>([
+  const { data, isLoading } = useMovies<DetailSourceMovies & TMoviesResponse>([
     `https://api.themoviedb.org/3/movie/${moviesId}?api_key=${key}&anguage=en-US`,
+    `https://api.themoviedb.org/3/movie/${moviesId}/similar?api_key=${key}`,
   ]);
   const [sourceVideos, setSourceVideos] = useState<SourceVideoMovies[]>([]);
-  const movie = data[0];
-
-  console.log(movie);
+  const movie: DetailSourceMovies = data[0];
+  const similiarMovie: StructuredReponseSource[] = data[1]?.results?.slice(0, 6);
 
   async function getSourceMovie() {
     fetch(`https://api.themoviedb.org/3/movie/${moviesId}/videos?api_key=${key}&language=en-US`)
@@ -103,6 +105,16 @@ const ShowDetail = memo(() => {
           </li>
         ))}
       </ul>
+
+      <div className='p-5'>
+        <h2 className='py-10 px-4 text-lg font-semibold hover:underline hover:text-accent hover:cursor-pointer'>
+          # Similiar Movies
+        </h2>
+        <Movies
+          isLoading={isLoading}
+          data={similiarMovie}
+        />
+      </div>
     </div>
   );
 });

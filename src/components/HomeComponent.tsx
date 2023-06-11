@@ -7,11 +7,11 @@ import Movies from "./common/Movies/Movies";
 import LinkAll from "./common/utils/LinkAll";
 import { StructuredReponseSource } from "@/types";
 
-type TMoviesResponse = {
+export interface TMoviesResponse {
   page: number;
   results: StructuredReponseSource[];
   total_pages: number;
-};
+}
 
 const HomeComponent = memo(function HomeComponent() {
   const key = import.meta.env.VITE_API_KEY;
