@@ -11,11 +11,11 @@ export const useMovies = function <T>(urls: string[]) {
       const urlsList = urls.map((url) => fetch(url).then((res) => res.json()));
       const response = await Promise.all(urlsList);
       setData(response);
+      setIsLoading(false);
     } catch (e) {
       setError(e);
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }, [urls]);
 
   useEffect(() => {

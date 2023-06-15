@@ -8,19 +8,23 @@ import DisplayInfo from "./DisplayInfo";
 import "@splidejs/react-splide/css";
 import "./DisplayPopular.css";
 
-const DisplayPopular: React.FC<MoviesDataTypes> = ({ data }) => {
+const DisplayPopular: React.FC<MoviesDataTypes> = ({ data, isLoading }) => {
   const DisplayValue = memo(() => {
     return (
       <>
         {data?.map(({ id, backdrop_path, release_date, title, vote_average, genre_ids }, index) => (
           <SplideSlide key={index}>
             <div className='group'>
-              <img
-                className='w-full h-auto rounded-2xl'
-                src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
-                alt={`poster-for-${id}`}
-              />
-              <InnerShadow model='landscape' />
+              {isLoading ? (
+                <div className='w-full h-[620px] rounded-2xl animate-pulse bg-input-only'></div>
+              ) : (
+                <img
+                  className='w-full h-auto rounded-2xl'
+                  src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
+                  alt={`poster-for-${id}`}
+                />
+              )}
+              {/* <InnerShadow model='landscape' /> */}
               <DisplayInfo
                 id={id}
                 date={release_date}

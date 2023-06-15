@@ -2,7 +2,6 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import Layout from "@/layouts/Layout";
 import Login from "@/pages/LoginPage";
 import TvShowPage from "@/pages/TvShowPage";
-import HomePage from "@/pages/HomePage";
 import ErrorPage from "@/pages/404Page";
 import ShowDetail from "@/components/ShowDetail";
 
@@ -16,10 +15,6 @@ export const route = createBrowserRouter(
       <Route
         path='/'
         element={<Layout />}>
-        <Route
-          path='homepage'
-          element={<HomePage />}
-        />
         <Route
           path='tv-show'
           element={<TvShowPage />}
