@@ -3,6 +3,12 @@ import { Box, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
+import { TAutenticateData } from "@/components/LoginComponent";
+
+type TInputGroupsProps = {
+  value: TAutenticateData;
+  setValue: React.Dispatch<React.SetStateAction<TAutenticateData>>;
+};
 
 const OutlineInputCustom = styled(OutlinedInput)<OutlinedInputProps>(({ theme }) => ({
   width: "100%",
@@ -20,18 +26,14 @@ const OutlineInputCustom = styled(OutlinedInput)<OutlinedInputProps>(({ theme })
   },
 }));
 
-const InputGroups = () => {
-  const [formData, setformData] = useState({
-    email: "",
-    password: "",
-  });
+const InputGroups: React.FC<TInputGroupsProps> = ({ value, setValue }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleformData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setformData((prevState) => ({
+    setValue((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -46,18 +48,18 @@ const InputGroups = () => {
         }}>
         <OutlineInputCustom
           color='primary'
-          name='email'
-          value={formData.email}
+          name='username'
+          value={value.username}
           onChange={handleformData}
           autoComplete='off'
-          type='email'
-          placeholder='Email address'
+          type='text'
+          placeholder='Username'
         />
       </Box>
       <OutlineInputCustom
         fullWidth
         name='password'
-        value={formData.password}
+        value={value.password}
         onChange={handleformData}
         id='outlined-adornment-password'
         type={showPassword ? "text" : "password"}

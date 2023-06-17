@@ -77,10 +77,12 @@ const ShowDetail = memo(() => {
           <span className='mb-2 text-accent'>"{movie?.tagline}"</span>
           <p className='max-w-[90%] '>{movie?.overview}</p>
           <ul className='grid grid-cols-6 gap-4 mt-2'>
-            {movie?.production_companies?.map((company) => {
+            {movie?.production_companies?.map((company, index) => {
               if (company.logo_path) {
                 return (
-                  <li className='p-3 bg-zinc-800 grid place-content-center transition duration-300 rounded-lg filter grayscale hover:grayscale-0 hover:cursor-pointer hover:bg-white'>
+                  <li
+                    key={index + 1}
+                    className='p-3 bg-zinc-800 grid place-content-center transition duration-300 rounded-lg filter grayscale hover:grayscale-0 hover:cursor-pointer hover:bg-white'>
                     <img
                       className='h-auto'
                       src={`https://image.tmdb.org/t/p/original${company.logo_path}`}
@@ -99,8 +101,10 @@ const ShowDetail = memo(() => {
         />
       </div>
       <ul className='flex gap-5 px-10'>
-        {movie?.genres?.map((genre) => (
-          <li className='px-4 py-2 rounded-full text-sm bg-input-only ring-secondary ring-1 hover:cursor-pointer'>
+        {movie?.genres?.map((genre, index) => (
+          <li
+            key={index + 1}
+            className='px-4 py-2 rounded-full text-sm bg-input-only ring-secondary ring-1 hover:cursor-pointer'>
             # {genre.name}
           </li>
         ))}

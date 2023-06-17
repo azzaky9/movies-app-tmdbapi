@@ -8,7 +8,6 @@ export const useGenre = (lists: (number | string)[]) => {
   const getGenre = async () => {
     const res = await fetch(url);
     const data = await res.json();
-
     setGenreList(data.genres);
   };
 

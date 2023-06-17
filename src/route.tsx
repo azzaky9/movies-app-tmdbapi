@@ -4,13 +4,18 @@ import Login from "@/pages/LoginPage";
 import TvShowPage from "@/pages/TvShowPage";
 import ErrorPage from "@/pages/404Page";
 import ShowDetail from "@/components/ShowDetail";
+import SignUpPage from "./pages/SignUpPage";
 
 export const route = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route
-        path='login'
+        path='sign-in'
         element={<Login />}
+      />
+      <Route
+        path='sign-up'
+        element={<SignUpPage />}
       />
       <Route
         path='/'
