@@ -1,6 +1,7 @@
-// import { useContext } from "react";
-// import { AuthContext } from "@/context/AuthContext";
+import { useCallback, useContext } from "react";
+import { AuthContext, User } from "@/context/AuthContext";
 import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export type TConfigurationRequest<T> = {
   method: "GET" | "PUT" | "POST";
@@ -18,7 +19,9 @@ interface TAuthWithUsernamePw {
 type TAuthLogin<K> = TConfigurationRequest<K> & TAuthWithUsernamePw;
 
 const useAuthenticateRequest = () => {
-  // const { setCurrentUser } = useContext(AuthContext);
+  const { setCurrentUser, value } = useContext(AuthContext);
+  const { currentUser } = value;
+  const navigate = useNavigate();
 
   type THeaderRequest = typeof headerRequest;
 
@@ -34,58 +37,60 @@ const useAuthenticateRequest = () => {
     headers: headerRequest,
   };
 
-  const loginWithAuthenticate = async (username: string, password: string) => {
-    type ResponseTokens = AxiosResponse<{ request_token: string }>;
+  const loginWithAuthenticate = useCallback(
+    async (username: string, password: string) => {
+      type ResponseTokens = AxiosResponse<{ request_token: string }>;
 
-    try {
-      const requestToken: ResponseTokens = await axios.request(configGetToken);
+      try {
+        const requestToken: ResponseTokens = await axios.request(configGetToken);
 
-      const configGetApprovedToken: TAuthLogin<THeaderRequest> = {
-        method: "POST",
-        url: "https://api.themoviedb.org/3/authentication/token/validate_with_login",
-        headers: headerRequest,
-        data: {
-          username: username,
-          password: password,
-          request_token: requestToken.data.request_token,
-        },
-      };
-      // const { data } = await axios.request(configGetApprovedToken);
-      const getApprovedToken: ResponseTokens = await axios.request(configGetApprovedToken);
+        const configGetApprovedToken: TAuthLogin<THeaderRequest> = {
+          method: "POST",
+          url: "https://api.themoviedb.org/3/authentication/token/validate_with_login",
+          headers: headerRequest,
+          data: {
+            username: username,
+            password: password,
+            request_token: requestToken.data.request_token,
+          },
+        };
+        // const { data } = await axios.request(configGetApprovedToken);
+        const getApprovedToken: ResponseTokens = await axios.request(configGetApprovedToken);
 
-      const configAuthGetSession: TAuthLogin<THeaderRequest> = {
-        method: "POST",
-        url: "https://api.themoviedb.org/3/authentication/session/new",
-        headers: headerRequest,
-        data: {
-          username: username,
-          password: password,
-          request_token: getApprovedToken.data.request_token,
-        },
-      };
+        const configAuthGetSession: TAuthLogin<THeaderRequest> = {
+          method: "POST",
+          url: "https://api.themoviedb.org/3/authentication/session/new",
+          headers: headerRequest,
+          data: {
+            username: username,
+            password: password,
+            request_token: getApprovedToken.data.request_token,
+          },
+        };
 
-      const authenticateUser: AxiosResponse<{ session_id: string }> = await axios.request(
-        configAuthGetSession
-      );
+        const authenticateUser: AxiosResponse<{ session_id: string }> = await axios.request(
+          configAuthGetSession
+        );
 
-      const configGetInformation: TConfigurationRequest<THeaderRequest> = {
-        method: "GET",
-        url: `https://api.themoviedb.org/3/account?${authenticateUser.data.session_id}`,
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWMwNDIzMmRhYTU3YmE1MTY1MTE0YmFiN2MxMGYwYyIsInN1YiI6IjY0M2E2YWZlZTMyOTQzMDU4MGY5YWM3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nNAQQ5lKeE9ASJczWAdkvH0HoK-ZH2nxZHoxefLEeK4",
-        },
-      };
+        const { data }: { data: User } = await axios.get(
+          `https://api.themoviedb.org/3/account?api_key=${
+            import.meta.env.VITE_API_KEY
+          }&session_id=${authenticateUser.data.session_id}`
+        );
+        setCurrentUser(data);
+        navigate("/");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [value]
+  );
 
-      const getInformationUser = await axios.request(configGetInformation);
-      console.log(getInformationUser.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const getCurrentUser = () => (currentUser ? currentUser : null);
 
-  return { loginWithAuthenticate };
+  const logoutCurrentUser = () => setCurrentUser(null);
+
+  return { loginWithAuthenticate, logoutCurrentUser, getCurrentUser };
 };
 
 export { useAuthenticateRequest };

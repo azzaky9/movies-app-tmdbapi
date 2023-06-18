@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 interface Avatar<T> {
   gravatar: {
@@ -24,7 +24,7 @@ type ActionType =
   | { type: "LOGIN_ERROR"; payload: string | null }
   | { type: "LOGOUT"; payload: null };
 
-type SetActionPayload<T extends ActionType, P> = T extends { payload: P } ? P : never;
+type SetPayload<T extends ActionType["type"]> = Extract<ActionType, { type: T }>["payload"];
 
 type TReducerState = {
   currentUser: User | null;
@@ -35,9 +35,9 @@ type TReducerState = {
 
 interface TAuthContext {
   value: TReducerState;
-  setApprovedToken: (payload: SetActionPayload<ActionType, "SET_APPROVED_TOKEN">) => void;
-  setSessionId: (payload: SetActionPayload<ActionType, "SET_SESSION_ID">) => void;
-  setCurrentUser: (payload: SetActionPayload<ActionType, "SET_USER_INFO">) => void;
+  setApprovedToken: (payload: SetPayload<"SET_APPROVED_TOKEN">) => void;
+  setSessionId: (payload: SetPayload<"SET_SESSION_ID">) => void;
+  setCurrentUser: (payload: SetPayload<"SET_USER_INFO">) => void;
 }
 
 const initialState: TReducerState = {
@@ -75,17 +75,27 @@ export const AuthContext = createContext<TAuthContext>({} as TAuthContext);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setApprovedToken = (payload: SetActionPayload<ActionType, "SET_APPROVED_TOKEN">) => {
+  const setApprovedToken = (payload: SetPayload<"SET_APPROVED_TOKEN">) => {
     dispatch({ type: "SET_APPROVED_TOKEN", payload: payload });
   };
 
-  const setSessionId = (payload: SetActionPayload<ActionType, "SET_SESSION_ID">) => {
+  const setSessionId = (payload: SetPayload<"SET_SESSION_ID">) => {
     dispatch({ type: "SET_SESSION_ID", payload: payload });
   };
 
-  const setCurrentUser = (payload: SetActionPayload<ActionType, "SET_USER_INFO">) => {
+  const setCurrentUser = (payload: SetPayload<"SET_USER_INFO">) => {
     dispatch({ type: "SET_USER_INFO", payload: payload });
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+
+    if (user) setCurrentUser(JSON.parse(user));
+  }, []);
+
+  useEffect(() => {
+    if (state.currentUser) localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
+  }, [state.currentUser]);
 
   return (
     <AuthContext.Provider
