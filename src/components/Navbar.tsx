@@ -9,11 +9,11 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
+import RoundedProfile from "./RoundedProfile";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,9 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -151,7 +151,7 @@ export default function PrimarySearchAppBar() {
           aria-controls='primary-search-account-menu'
           aria-haspopup='true'
           color='inherit'>
-          <AccountCircle />
+          <RoundedProfile />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -159,11 +159,11 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div className='flex flex-grow justify-center items-center border-b-secondary border-opacity-5 border-b-2'>
       <AppBar
         position='static'
         color='transparent'
-        sx={{ p: 2.9 }}>
+        sx={{ p: 2.9, boxShadow: "none" }}>
         <Toolbar sx={{ paddingLeft: "45px" }}>
           <Search>
             <SearchIconWrapper>
@@ -204,7 +204,7 @@ export default function PrimarySearchAppBar() {
               aria-haspopup='true'
               onClick={handleProfileMenuOpen}
               color='inherit'>
-              <AccountCircle />
+              <RoundedProfile />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -222,6 +222,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </div>
   );
 }
