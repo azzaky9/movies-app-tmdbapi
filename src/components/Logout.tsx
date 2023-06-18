@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
