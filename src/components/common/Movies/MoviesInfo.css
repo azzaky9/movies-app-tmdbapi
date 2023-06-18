@@ -24,6 +24,7 @@
   @apply group-hover:max-h-[120px];
 
   transition: all ease-in-out 250ms;
+  height: fit-content;
   max-height: 330px;
 }
 

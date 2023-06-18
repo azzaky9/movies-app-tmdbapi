@@ -8,8 +8,8 @@ import { useToggle } from "../hooks/useToggle";
 const Sidebar = () => {
   const { isOpen, setIsOpen } = useToggle();
 
-  const renderClassDynamically = `relative p-only-sidebar w-[245px] h-full z-40 border-r-secondary border-opacity-5 border-r-2 transition-all duration-300 
-    md:bg-primary md:absolute  ${isOpen ? "md:-left-[0]" : "md:-left-[34.499%]"}
+  const renderClassDynamically = `relative p-only-sidebar w-[245px] z-40 border-r-secondary border-opacity-5 border-r-2 transition-all duration-300 
+    md:bg-primary md:absolute md:h-full  ${isOpen ? "md:-left-[0]" : "md:-left-[34.499%]"}
   `;
 
   const BlurredDisplay = () => {
@@ -30,7 +30,7 @@ const Sidebar = () => {
       <div className={renderClassDynamically}>
         <div
           onClick={handleToggle}
-          className='absolute top-[1.8rem] -right-[3.9rem] hidden sm:block md:block'>
+          className='absolute top-[1.8rem] -right-[3.9rem] hidden sm:block md:block '>
           <IconButton
             size='large'
             color='neutral'>
