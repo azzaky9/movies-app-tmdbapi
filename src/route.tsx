@@ -4,7 +4,8 @@ import Login from "@/pages/LoginPage";
 import TvShowPage from "@/pages/TvShowPage";
 import ErrorPage from "@/pages/404Page";
 import ShowDetail from "@/components/ShowDetail";
-import SignUpPage from "./pages/SignUpPage";
+import SignUpPage from "@/pages/SignUpPage";
+import Logout from "@/components/Logout";
 
 export const route = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,10 @@ export const route = createBrowserRouter(
         <Route
           path='movies/:moviesId'
           element={<ShowDetail />}
+        />
+        <Route
+          path='logout'
+          element={<Logout />}
         />
       </Route>
       <Route

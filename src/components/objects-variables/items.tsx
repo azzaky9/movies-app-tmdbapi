@@ -29,11 +29,11 @@ export const menuItems = [
     ],
   },
   {
-    names: "Libary",
+    names: "Library",
     childList: [
       {
-        name: "Playlist",
-        path: "/playlist",
+        name: "Watch List",
+        path: "/watchlist",
         icons: <SubscriptionsOutlined />,
       },
     ],
@@ -48,7 +48,7 @@ export const menuItems = [
       },
       {
         name: "Log Out",
-        path: "/playlist",
+        path: "/logout",
         icons: <LogoutOutlined />,
       },
     ],
