@@ -1,4 +1,3 @@
-import { menuItems } from "./objects-variables/items";
 import Menu from "./common/Sidebar/Menu";
 import Brands from "./common/Sidebar/Brands";
 import { MenuOutlined } from "@mui/icons-material";
@@ -38,7 +37,7 @@ const Sidebar = () => {
           </IconButton>
         </div>
         <Brands />
-        <Menu menuList={menuItems} />
+        <Menu />
       </div>
     </>
   );

@@ -7,7 +7,7 @@ interface TitleTypes {
 const Title: React.FC<TitleTypes> = ({ title, date, size }) => {
   const classBasedCondition = `${
     size === "base" ? "text-base" : size === "medium" ? "text-[18px]" : "text-[24px]"
-  } font-semibold mb-4`;
+  } font-semibold mb-2`;
 
   return (
     <h3 className={classBasedCondition}>

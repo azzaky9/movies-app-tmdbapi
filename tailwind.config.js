@@ -10,6 +10,7 @@ export default {
         neutral: "#fafafa",
         black: "#000000",
         white: "#ffffff",
+        error: "red",
         "input-only": "#131212",
       },
       padding: {

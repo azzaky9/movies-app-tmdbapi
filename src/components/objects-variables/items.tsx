@@ -55,21 +55,21 @@ export const menuItems = [
   },
 ];
 
-export const lists: { text: string; path: string }[] = [
-  {
-    text: "Home",
-    path: "/",
-  },
-  {
-    text: "TV Show",
-    path: "/tv-show",
-  },
-  {
-    text: "Movie",
-    path: "/movie",
-  },
-  {
-    text: "Anime",
-    path: "/anime",
-  },
-];
+// export const lists: { text: string; path: string }[] = [
+//   {
+//     text: "Home",
+//     path: "/",
+//   },
+//   {
+//     text: "TV Show",
+//     path: "/tv-show",
+//   },
+//   {
+//     text: "Movie",
+//     path: "/movie",
+//   },
+//   {
+//     text: "Anime",
+//     path: "/anime",
+//   },
+// ];

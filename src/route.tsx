@@ -6,6 +6,7 @@ import ErrorPage from "@/pages/404Page";
 import ShowDetail from "@/components/ShowDetail";
 import SignUpPage from "@/pages/SignUpPage";
 import Logout from "@/components/Logout";
+import WatchListPage from "./pages/WatchListPage";
 
 export const route = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,10 @@ export const route = createBrowserRouter(
         <Route
           path='logout'
           element={<Logout />}
+        />
+        <Route
+          path='watchlist'
+          element={<WatchListPage />}
         />
       </Route>
       <Route

@@ -19,7 +19,7 @@ declare module "@mui/material/IconButton" {
 export const theme = createTheme({
   palette: {
     neutral: {
-      main: "#ffffff",
+      main: "#F9B546",
     },
   },
 });

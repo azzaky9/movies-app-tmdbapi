@@ -8,7 +8,7 @@ const Layout = () => {
   const currentLocation = location.pathname;
 
   return (
-    <div className='w-full flex relative overflow-x-hidden'>
+    <div className=' w-full flex relative overflow-x-hidden'>
       <Sidebar />
       <div className='flex flex-col w-full'>
         <Navbar />

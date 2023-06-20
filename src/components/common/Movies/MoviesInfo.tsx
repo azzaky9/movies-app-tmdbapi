@@ -1,9 +1,55 @@
-import { PlayArrow, BookmarkAddOutlined, KeyboardArrowDown } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
+import { BookmarkAddOutlined, PlayCircleFilledWhite, PlaylistAdd } from "@mui/icons-material";
+import { Tooltip, IconButton } from "@mui/material";
 import { InfoPropTypes } from "@/types";
 import { Title } from "@/components/common/utils";
 import { useGenre } from "@/hooks/useGenre";
 import { useNavigate } from "react-router-dom";
+
+const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
+  const { genreNames } = useGenre(genre);
+  const navigate = useNavigate();
+  const path = "/movies/" + id;
+
+  const handleClick = () => navigate(path);
+
+  const genreText =
+    genreNames?.length > 1 ? `${genreNames.at(0)} / ${genreNames.at(1)}` : `${genreNames.at(0)}`;
+
+  return (
+    <div className='absolute bottom-0 w-full p-3'>
+      <span className='text-accent'>{genreText}</span>
+      <Title
+        title={title}
+        date={date}
+        size='medium'
+      />
+
+      <div className='flex justify-between'>
+        <div className='flex '>
+          <IconButton
+            color='neutral'
+            aria-label='look detail movie'
+            size='large'>
+            <PlaylistAdd
+              fontSize='inherit'
+              htmlColor='#F9B546'
+            />
+          </IconButton>
+          <IconButton
+            color='neutral'
+            onClick={handleClick}
+            aria-label='look detail movie'
+            size='medium'>
+            <PlayCircleFilledWhite
+              fontSize='large'
+              htmlColor='#F9B546'
+            />
+          </IconButton>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const BookmarkButton = () => {
   return (
@@ -12,43 +58,6 @@ export const BookmarkButton = () => {
         <BookmarkAddOutlined className='text-accent' />
       </Tooltip>
     </button>
-  );
-};
-
-const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
-  const { genreNames } = useGenre(genre);
-  const navigate = useNavigate();
-
-  const genreText =
-    genreNames?.length > 1 ? `${genreNames[0]} / ${genreNames[1]}` : `${genreNames[0]}`;
-
-  return (
-    <div className='absolute bottom-0 w-full p-3'>
-      <span className='text-accent pb-2'>{genreText}</span>
-      <Title
-        title={title}
-        date={date}
-        size='medium'
-      />
-
-      <div className='flex justify-between'>
-        <div className='flex gap-3'>
-          <button
-            onClick={() => navigate(`/movies/${id}`)}
-            className='smooth-transition bg-accent w-10 h-10 bg-opacity-10 rounded-full hover:bg-opacity-100 hover:cursor-pointer'>
-            <Tooltip title='Detail Movies'>
-              <PlayArrow className='smooth-transition text-accent hover:text-primary' />
-            </Tooltip>
-          </button>
-          <BookmarkButton />
-        </div>
-        <div className='bg-white p-2 bg-opacity-10 rounded-lg'>
-          <Tooltip title='expand ?'>
-            <KeyboardArrowDown className='text-white hover:cursor-pointer' />
-          </Tooltip>
-        </div>
-      </div>
-    </div>
   );
 };
 

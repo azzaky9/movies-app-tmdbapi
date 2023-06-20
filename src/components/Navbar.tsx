@@ -159,7 +159,7 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <div className='flex flex-grow justify-center items-center border-b-secondary border-opacity-5 border-b-2'>
+    <div className='flex  border-b-secondary border-opacity-5 border-b-2'>
       <AppBar
         position='static'
         color='transparent'

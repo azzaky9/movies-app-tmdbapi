@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import React from "react";
-import { ListMenuTypes } from "@/types";
+import { menuItems } from "@/components/objects-variables/items";
 
-const Menu: React.FC<ListMenuTypes> = ({ menuList }) => {
+const Menu = () => {
   return (
     <div className='mt-[30px] flex flex-col gap-[40px]'>
-      {menuList.map(({ names, childList }, index) => (
+      {menuItems.map(({ names, childList }, index) => (
         <ul key={index}>
           <h3 className='text-lg mb-5'>{names}</h3>
           <div className='flex flex-col gap-[26px]'>

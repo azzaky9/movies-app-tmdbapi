@@ -5,7 +5,7 @@ export const useMovies = function <T>(urls: string[]) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>("");
 
-  const fetchAPI = useCallback(async () => {
+  const fetchAPI = async () => {
     setIsLoading(true);
     try {
       const urlsList = urls.map((url) => fetch(url).then((res) => res.json()));
@@ -16,7 +16,7 @@ export const useMovies = function <T>(urls: string[]) {
       setError(e);
       setIsLoading(false);
     }
-  }, [urls]);
+  };
 
   useEffect(() => {
     fetchAPI();

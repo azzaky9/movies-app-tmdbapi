@@ -5,7 +5,7 @@ const HomePage = ({ location }: { location: string }) => {
   return (
     <>
       {location === "/logout" ? <Logout /> : null}
-      <HomeComponent />;
+      <HomeComponent />
     </>
   );
 };
