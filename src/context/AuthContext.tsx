@@ -21,14 +21,20 @@ type ActionType =
   | { type: "SET_APPROVED_TOKEN"; payload: string | null }
   | { type: "SET_SESSION_ID"; payload: string | null }
   | { type: "SET_USER_INFO"; payload: User | null }
-  | { type: "LOGIN_ERROR"; payload: string | null }
+  | { type: "LOGIN_ERROR"; payload: InvalidStatus | null }
   | { type: "LOGOUT"; payload: null };
 
 type SetPayload<T extends ActionType["type"]> = Extract<ActionType, { type: T }>["payload"];
 
+export interface InvalidStatus {
+  status_code: number;
+  status_message: string;
+  success: boolean;
+}
+
 type TReducerState = {
   currentUser: User | null;
-  error: string | null;
+  error: InvalidStatus | null;
   requestToken: string | null;
   sessionId: string | null;
 };
@@ -38,6 +44,7 @@ interface TAuthContext {
   setApprovedToken: (payload: SetPayload<"SET_APPROVED_TOKEN">) => void;
   setSessionId: (payload: SetPayload<"SET_SESSION_ID">) => void;
   setCurrentUser: (payload: SetPayload<"SET_USER_INFO">) => void;
+  setErrorMessage: (payload: SetPayload<"LOGIN_ERROR">) => void;
 }
 
 const initialState: TReducerState = {
@@ -87,14 +94,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "SET_USER_INFO", payload: payload });
   };
 
-  useEffect(() => {
-    const user = localStorage.getItem("currentUser");
+  const setErrorMessage = (payload: SetPayload<"LOGIN_ERROR">) => {
+    dispatch({ type: "LOGIN_ERROR", payload: payload });
+  };
 
+  const user = localStorage.getItem("currentUser");
+
+  useEffect(() => {
     if (user) setCurrentUser(JSON.parse(user));
   }, []);
 
   useEffect(() => {
-    if (state.currentUser) localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
+    if (!state.currentUser) localStorage.setItem("currentUser", JSON.stringify(null));
+
+    localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
   }, [state.currentUser]);
 
   return (
@@ -104,6 +117,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setApprovedToken: setApprovedToken,
         setCurrentUser: setCurrentUser,
         setSessionId: setSessionId,
+        setErrorMessage: setErrorMessage,
       }}>
       {children}
     </AuthContext.Provider>

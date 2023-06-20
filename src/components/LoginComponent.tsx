@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Brands from "./common/Sidebar/Brands";
 import InputGroups from "./common/FormUtils/InputGroups";
-import InfiniteScrol from "../lib/InfiniteScrol";
-import { Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Login } from "@mui/icons-material";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 
 export type TAutenticateData = {
@@ -12,8 +12,9 @@ export type TAutenticateData = {
 
 const LoginComponent = () => {
   // const { fetchAllRequirementEndpoint } = useAuthenticateRequest();
-  const { loginWithAuthenticate } = useAuthenticateRequest();
-  const [authenticateData, setAuthenticateData] = useState<TAutenticateData>({
+  const { loginWithAuthenticate, isRequestDone, getErrorMessage } = useAuthenticateRequest();
+  const errMessage = getErrorMessage();
+  const [authenticateData, setAuthenticateData] = useState({
     username: "",
     password: "",
   });
@@ -24,15 +25,17 @@ const LoginComponent = () => {
 
   return (
     <div className='w-full h-screen grid grid-cols-2'>
-      <InfiniteScrol />
-      <div className='bg-input-only w-[428px] h-fit p-10 flex flex-col justify-center items-center gap-10 place-self-center'>
-        <h2 className='text-secondary text-2xl font-semibold'>Login</h2>
+      <div className='bg-input-only w-[390px] py-20 h-fit p-10 flex flex-col justify-center gap-10 place-self-center '>
         <Brands size='large' />
+
         <InputGroups
           setValue={setAuthenticateData}
           value={authenticateData}
         />
-        <Button
+        <LoadingButton
+          loadingPosition='end'
+          endIcon={<Login />}
+          loading={isRequestDone}
           onClick={handleSubmit}
           variant='contained'
           size='large'
@@ -43,9 +46,22 @@ const LoginComponent = () => {
             "&:hover": {
               backgroundColor: "rgba(249, 181, 70, 0.890)",
             },
+            "&:disabled": {
+              color: "white",
+              backgroundColor: "rgba(255, 255, 255, 0.128)",
+            },
           }}>
-          Sign In
-        </Button>
+          <span>{isRequestDone ? "Request ..." : "Login"} </span>
+        </LoadingButton>
+        <p className='text-sm text-secondary text-center'>
+          not already have account please{" "}
+          <a
+            href=''
+            className='text-blue-500 text-opacity-80 hover:text-opacity-100'>
+            sign up{" "}
+          </a>
+          ?
+        </p>
       </div>
     </div>
   );
