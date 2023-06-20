@@ -4,6 +4,7 @@ import InputGroups from "./common/FormUtils/InputGroups";
 import { LoadingButton } from "@mui/lab";
 import { Login } from "@mui/icons-material";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
+import InfiniteScrol from "@/lib/InfiniteScrol";
 
 export type TAutenticateData = {
   username: string;
@@ -11,9 +12,7 @@ export type TAutenticateData = {
 };
 
 const LoginComponent = () => {
-  // const { fetchAllRequirementEndpoint } = useAuthenticateRequest();
-  const { loginWithAuthenticate, isRequestDone, getErrorMessage } = useAuthenticateRequest();
-  const errMessage = getErrorMessage();
+  const { loginWithAuthenticate, isRequestDone } = useAuthenticateRequest();
   const [authenticateData, setAuthenticateData] = useState({
     username: "",
     password: "",
@@ -24,10 +23,12 @@ const LoginComponent = () => {
   const handleSubmit = () => loginWithAuthenticate(username, password);
 
   return (
-    <div className='w-full h-screen grid grid-cols-2'>
-      <div className='bg-input-only w-[390px] py-20 h-fit p-10 flex flex-col justify-center gap-10 place-self-center '>
+    <div className='w-full overflow-hidden h-screen grid place-content-center bg-gradient-to-br from-slate-950 via-zinc-950 to-slate-950 relative'>
+      <InfiniteScrol />
+      <InfiniteScrol reverse />
+      <InfiniteScrol />
+      <div className='bg-input-only w-[390px] py-20 h-fit p-10 flex flex-col justify-center gap-10 place-self-center shadow-lg shadow-input-only absolute'>
         <Brands size='large' />
-
         <InputGroups
           setValue={setAuthenticateData}
           value={authenticateData}
