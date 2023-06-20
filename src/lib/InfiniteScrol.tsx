@@ -1,23 +1,38 @@
 import "./InfiniteScroll.css";
-import { memo } from "react";
-import { useMovies } from "@/hooks/useMovies";
-import { TMoviesResponse } from "@/components/HomeComponent";
+import { memo, useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { StructuredReponseSource } from "@/types";
 
 const InfiniteScrol = memo(({ reverse }: { reverse?: boolean }) => {
-  const { data } = useMovies<TMoviesResponse>([
-    "https://api.themoviedb.org/3/movie/popular?api_key=6ec04232daa57ba5165114bab7c10f0c&language=en-US&page=1",
-    "https://api.themoviedb.org/3/movie/popular?api_key=6ec04232daa57ba5165114bab7c10f0c&language=en-US&page=2",
-  ]);
+  const key = import.meta.env.VITE_API_KEY;
+  const [marqueeMovie, setMarqueMovie] = useState<StructuredReponseSource[]>([]);
 
-  const source = data[0]?.results.concat(data[1]?.results);
+  const endpoints = [
+    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=3`,
+    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=2`,
+  ];
 
-  const chooseSource = reverse ? [0, 10] : [10, 20];
+  const fetchAll = async () => {
+    const mappingEndpoint = endpoints.map((endpoint) => axios.get(endpoint));
+
+    const source: AxiosResponse<{ results: StructuredReponseSource[] }>[] = await Promise.all(
+      mappingEndpoint
+    );
+
+    setMarqueMovie(source[0].data.results);
+  };
+
+  useEffect(() => {
+    fetchAll();
+  }, []);
+
+  console.log(marqueeMovie);
 
   return (
     <article className='wrapper'>
       <div className={`marquee ${reverse ? "marquee--reverse" : null}`}>
         <div className='marquee__group'>
-          {source?.slice(chooseSource[0], chooseSource[1]).map((item) => (
+          {marqueeMovie?.slice(0, 10).map((item) => (
             <img
               src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
               alt=''
@@ -29,7 +44,7 @@ const InfiniteScrol = memo(({ reverse }: { reverse?: boolean }) => {
         <div
           aria-hidden='true'
           className='marquee__group'>
-          {source?.slice(chooseSource[0], chooseSource[1]).map((item) => (
+          {marqueeMovie?.slice(10, 20).map((item) => (
             <img
               src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
               alt=''

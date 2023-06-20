@@ -1,27 +1,80 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { StructuredReponseSource } from "@/types";
 
-export const useMovies = function <T>(urls: string[]) {
-  const [data, setData] = useState<T[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | unknown>("");
+interface TrailerMoviesTypes {
+  key: string;
+  name: string;
+  type: "Trailer" | string;
+}
 
-  const fetchAPI = async () => {
+interface ProductionCompany {
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
+
+type GenresObject = {
+  id: number;
+  name: string;
+};
+
+interface DetailSourceMovies extends StructuredReponseSource {
+  production_companies: ProductionCompany[];
+  tagline: string;
+  status: string;
+  overview: string;
+  genres: GenresObject[];
+}
+
+export const useMovies = (id?: number | string) => {
+  const key = import.meta.env.VITE_API_KEY;
+
+  const [movie, setMovie] = useState<DetailSourceMovies | null>(null);
+  const [movieTrailer, setMovieTrailer] = useState<TrailerMoviesTypes[]>([]);
+  const [trailerPath, setTrailerPath] = useState("");
+  const [movieSimiliar, setMovieSimiliar] = useState<StructuredReponseSource[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getSimiliarAndMovies = async () => {
     setIsLoading(true);
+
     try {
-      const urlsList = urls.map((url) => fetch(url).then((res) => res.json()));
-      const response = await Promise.all(urlsList);
-      setData(response);
+      const getMovie: AxiosResponse<DetailSourceMovies> = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${key}&anguage=en-US`
+      );
+      setMovie(getMovie.data);
+
+      const trailer: AxiosResponse<{ results: TrailerMoviesTypes[] }> = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${key}&language=en-US`
+      );
+
+      setMovieTrailer(trailer.data.results);
+
+      const getSimiliarMovie: AxiosResponse<{ results: StructuredReponseSource[] }> =
+        await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${key}`);
+
+      setMovieSimiliar(getSimiliarMovie.data.results);
+
       setIsLoading(false);
-    } catch (e) {
-      setError(e);
+    } catch (err) {
+      if (err instanceof AxiosError) console.log(err);
+
       setIsLoading(false);
     }
   };
 
+  const findKeyTrailer = () => {
+    const trailer = movieTrailer?.find((item) => item.type === "Trailer");
+    const path = `https://www.youtube.com/watch?v=${trailer?.key}`;
+
+    setTrailerPath(path);
+  };
+
   useEffect(() => {
-    fetchAPI();
-    // eslint-disable-next-line
+    getSimiliarAndMovies();
+    findKeyTrailer();
   }, []);
 
-  return { data, error, isLoading };
+  return { isLoading, movie, movieSimiliar, trailerPath };
 };

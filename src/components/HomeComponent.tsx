@@ -1,11 +1,12 @@
 import { memo } from "react";
-import { useMovies } from "../hooks/useMovies";
 import { WhatshotOutlined } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import DisplayPopular from "./common/Banner/DisplayPopular";
 import Movies from "./common/Movies/Movies";
 import LinkAll from "./common/utils/LinkAll";
 import { StructuredReponseSource } from "@/types";
+import { useContext } from "react";
+import { MoviesContext } from "@/context/MoviesContext";
 
 export interface TMoviesResponse {
   page: number;
@@ -14,12 +15,7 @@ export interface TMoviesResponse {
 }
 
 const HomeComponent = memo(function HomeComponent() {
-  const key = import.meta.env.VITE_API_KEY;
-
-  const { data, isLoading } = useMovies<TMoviesResponse>([
-    `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`,
-    `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`,
-  ]);
+  const { popularMovies, topRatedMovies, isRequestDone } = useContext(MoviesContext);
 
   return (
     <Stack
@@ -31,8 +27,8 @@ const HomeComponent = memo(function HomeComponent() {
           <LinkAll destination='/popular-movies' />
         </div>
         <DisplayPopular
-          isLoading={isLoading}
-          data={data[0]?.results?.slice(0, 6)}
+          data={popularMovies}
+          isLoading={isRequestDone}
         />
       </div>
       <div>
@@ -40,8 +36,8 @@ const HomeComponent = memo(function HomeComponent() {
           <h2 className='text-2xl font-semibold px-1'>Top 10 Rated Movies</h2>
         </div>
         <Movies
-          data={data[1]?.results?.slice(0, 10)}
-          isLoading={isLoading}
+          data={topRatedMovies}
+          isLoading={isRequestDone}
         />
       </div>
       <div>
@@ -52,8 +48,8 @@ const HomeComponent = memo(function HomeComponent() {
           <LinkAll destination='/trending-movies' />
         </div>
         <Movies
-          data={data[0]?.results?.slice(0, 10)}
-          isLoading={isLoading}
+          data={popularMovies}
+          isLoading={isRequestDone}
         />
       </div>
     </Stack>
