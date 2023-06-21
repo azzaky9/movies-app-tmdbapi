@@ -26,14 +26,13 @@ const InfiniteScrol = memo(({ reverse }: { reverse?: boolean }) => {
     fetchAll();
   }, []);
 
-  console.log(marqueeMovie);
-
   return (
     <article className='wrapper'>
       <div className={`marquee ${reverse ? "marquee--reverse" : null}`}>
         <div className='marquee__group'>
-          {marqueeMovie?.slice(0, 10).map((item) => (
+          {marqueeMovie?.slice(0, 10).map((item, index) => (
             <img
+              key={index}
               src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
               alt=''
               className='rounded-xl'
@@ -44,8 +43,9 @@ const InfiniteScrol = memo(({ reverse }: { reverse?: boolean }) => {
         <div
           aria-hidden='true'
           className='marquee__group'>
-          {marqueeMovie?.slice(10, 20).map((item) => (
+          {marqueeMovie?.slice(10, 20).map((item, index) => (
             <img
+              key={index}
               src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
               alt=''
               className='rounded-3xl'

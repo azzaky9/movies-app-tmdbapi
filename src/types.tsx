@@ -10,7 +10,7 @@ export interface InfoPropTypes {
 
 export interface MoviesDataTypes {
   data: StructuredReponseSource[];
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export interface StructuredReponseSource {

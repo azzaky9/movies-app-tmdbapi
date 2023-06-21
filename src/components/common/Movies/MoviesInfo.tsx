@@ -4,9 +4,11 @@ import { InfoPropTypes } from "@/types";
 import { Title } from "@/components/common/utils";
 import { useGenre } from "@/hooks/useGenre";
 import { useNavigate } from "react-router-dom";
+import { useService } from "@/hooks/useService";
 
 const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
   const { genreNames } = useGenre(genre);
+  const { postWatchList } = useService();
   const navigate = useNavigate();
   const path = "/movies/" + id;
 
@@ -28,7 +30,8 @@ const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
         <div className='flex '>
           <IconButton
             color='neutral'
-            aria-label='look detail movie'
+            onClick={() => postWatchList(Number(id))}
+            aria-label='add-to-watchlist'
             size='large'>
             <PlaylistAdd
               fontSize='inherit'

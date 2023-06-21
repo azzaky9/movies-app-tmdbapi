@@ -91,9 +91,12 @@ const useAuthenticateRequest = () => {
     }
   };
 
-  const getCurrentUser = useCallback(() => {
-    return currentUser ? currentUser : null;
-  }, [currentUser]);
+  const getCurrentUser = useCallback(
+    function () {
+      return currentUser ? currentUser : null;
+    },
+    [currentUser]
+  );
 
   const getErrorMessage = useCallback(() => {
     return error ? error : null;

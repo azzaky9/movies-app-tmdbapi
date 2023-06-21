@@ -4,7 +4,6 @@ import Login from "@/pages/LoginPage";
 import TvShowPage from "@/pages/TvShowPage";
 import ErrorPage from "@/pages/404Page";
 import ShowDetail from "@/components/ShowDetail";
-import SignUpPage from "@/pages/SignUpPage";
 import Logout from "@/components/Logout";
 import WatchListPage from "./pages/WatchListPage";
 
@@ -14,10 +13,6 @@ export const route = createBrowserRouter(
       <Route
         path='sign-in'
         element={<Login />}
-      />
-      <Route
-        path='sign-up'
-        element={<SignUpPage />}
       />
       <Route
         path='/'

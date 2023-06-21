@@ -1,34 +1,62 @@
-const WatchListComponents = () => {
+import { memo, useEffect, useState } from "react";
+import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
+import { useService } from "@/hooks/useService";
+import { AxiosError } from "axios";
+import CardWithDetail from "./common/Card/CardWithDetail";
+import { DetailSourceMovies } from "@/hooks/useMovies";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { Chip } from "@mui/material";
+import { Theaters } from "@mui/icons-material";
+
+const WatchListComponents = memo(() => {
+  const { getCurrentUser } = useAuthenticateRequest();
+  const { isLoading, fetchSourceUserHave } = useService();
+  const [userWl, setUserWl] = useState<DetailSourceMovies[]>([]);
+
+  const user = getCurrentUser();
+
+  const getUserWl = async () => {
+    try {
+      const data = await fetchSourceUserHave();
+
+      if (data) setUserWl(data);
+    } catch (e) {
+      if (e instanceof AxiosError) console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getUserWl();
+  }, []);
+
+  if (isLoading) {
+    return <p>Wait . . .</p>;
+  }
+
   return (
-    <div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, cum sint sequi nobis
-      expedita incidunt nam dignissimos reprehenderit similique at provident alias repudiandae quis
-      molestias dolorum corrupti amet recusandae tempore tempora cupiditate? Autem dolor
-      dignissimos, beatae in officia ea dolore doloribus, tempora facere pariatur distinctio facilis
-      odio quisquam. Omnis, quae eaque tempora quis harum doloremque maxime placeat? Itaque
-      repudiandae dolores maiores error quas tempora ea fugiat et accusantium, quos laborum aperiam
-      sit cupiditate temporibus, laudantium vel debitis expedita impedit voluptatibus distinctio
-      recusandae. Asperiores, ad. Asperiores itaque voluptas tenetur neque adipisci eius dicta
-      dolorem, impedit, commodi sunt quam perspiciatis nesciunt omnis eveniet nisi aspernatur quidem
-      iste quod nemo. Placeat quod accusantium aperiam natus sapiente dolorem iste maiores alias,
-      labore eaque distinctio quae nemo dignissimos quam nulla explicabo magnam ipsum, asperiores
-      blanditiis consectetur rerum et fuga assumenda? Voluptatem autem dolorum corporis
-      exercitationem ipsam culpa assumenda expedita, alias facere officiis quas repellat quis
-      numquam inventore magnam sapiente voluptas magni ipsum ab labore reprehenderit iusto
-      voluptatum tempore. Quidem laborum aperiam laboriosam porro aut, facere deserunt odio. Nihil
-      repudiandae quas in distinctio voluptates. Nobis atque temporibus modi fugit assumenda commodi
-      distinctio sit, non vero consequuntur quos eligendi minus? Aut debitis sunt neque eum ipsam
-      dolorem, earum culpa consectetur facere ratione, nobis expedita id? Similique ex consequuntur
-      illum dicta perferendis ea obcaecati laboriosam vero sint officia nam quaerat inventore odit
-      reprehenderit eligendi animi quisquam culpa ut, in molestiae tempore. Repellendus, odio eaque
-      quod vero soluta nisi cupiditate iure? Commodi quam minus soluta nostrum laborum provident
-      perspiciatis non, doloribus quod libero repudiandae sed iusto id error alias nemo amet sunt
-      ipsa consectetur odio! Nesciunt labore animi deleniti, nobis possimus inventore eligendi fugit
-      beatae tempora aut culpa adipisci, dolor dignissimos placeat doloremque architecto non, dicta
-      molestias cum aliquid. Id aspernatur consequuntur distinctio perspiciatis dolore numquam
-      eligendi in aut!
+    <div className='p-5'>
+      <h5 className='text-base p-5'>Hello {user?.name} Here's your Watchlist</h5>
+      <Chip
+        sx={{ mx: 2, my: 1, py: 1, color: "#fafafa" }}
+        variant='outlined'
+        color='default'
+        icon={<Theaters />}
+        label='Movies'
+        size='small'
+      />
+      <div className='flex flex-col'>
+        <LazyLoadComponent style={{ overflowY: "scroll", height: "120px" }}>
+          {userWl.map((item, index) => (
+            <CardWithDetail
+              key={index}
+              data={item}
+              size='280px'
+            />
+          ))}
+        </LazyLoadComponent>
+      </div>
     </div>
   );
-};
+});
 
 export default WatchListComponents;

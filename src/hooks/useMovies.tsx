@@ -19,7 +19,7 @@ type GenresObject = {
   name: string;
 };
 
-interface DetailSourceMovies extends StructuredReponseSource {
+export interface DetailSourceMovies extends StructuredReponseSource {
   production_companies: ProductionCompany[];
   tagline: string;
   status: string;

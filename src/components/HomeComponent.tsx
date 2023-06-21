@@ -20,14 +20,14 @@ const HomeComponent = memo(function HomeComponent() {
   return (
     <Stack
       gap={5}
-      sx={{ p: 6 }}>
+      sx={{ pt: 2, px: 3, pb: 10 }}>
       <div>
         <div className='flex justify-between pb-8'>
           <h2 className='text-2xl font-semibold px-1'>Popular Now</h2>
           <LinkAll destination='/popular-movies' />
         </div>
         <DisplayPopular
-          data={popularMovies}
+          data={popularMovies?.slice(0, 10)}
           isLoading={isRequestDone}
         />
       </div>
@@ -36,7 +36,7 @@ const HomeComponent = memo(function HomeComponent() {
           <h2 className='text-2xl font-semibold px-1'>Top 10 Rated Movies</h2>
         </div>
         <Movies
-          data={topRatedMovies}
+          data={topRatedMovies?.slice(0, 10)}
           isLoading={isRequestDone}
         />
       </div>
@@ -48,7 +48,7 @@ const HomeComponent = memo(function HomeComponent() {
           <LinkAll destination='/trending-movies' />
         </div>
         <Movies
-          data={popularMovies}
+          data={popularMovies?.slice(0, 10)}
           isLoading={isRequestDone}
         />
       </div>
