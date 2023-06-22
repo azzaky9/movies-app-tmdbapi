@@ -61,7 +61,7 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { getCurrentUser } = useAuthenticateRequest();
-  const user = getCurrentUser();
+  const userSource = getCurrentUser();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -85,7 +85,7 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleClick = () => {
-    return user ? null : navigate("/sign-in");
+    return userSource ? null : navigate("/sign-in");
   };
 
   const menuId = "primary-search-account-menu";
@@ -104,8 +104,8 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}>
-      <MenuItem onClick={handleClick}>{user ? "Profile" : "Login"}</MenuItem>
-      {user ? <MenuItem onClick={handleMenuClose}>My account</MenuItem> : null}
+      <MenuItem onClick={handleClick}>{userSource ? "Profile" : "Login"}</MenuItem>
+      {userSource ? <MenuItem onClick={handleMenuClose}>My account</MenuItem> : null}
     </Menu>
   );
 
