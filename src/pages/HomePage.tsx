@@ -1,5 +1,5 @@
 import HomeComponent from "../components/pagesComponent/HomeComponent";
-import Logout from "@/components/Logout";
+import Logout from "@/components/common/utils/Logout";
 
 const HomePage = ({ location }: { location: string }) => {
   return (

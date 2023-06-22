@@ -33,6 +33,7 @@ export const route = createBrowserRouter(
           path='watchlist'
           element={<WatchListPage />}
         />
+        <Route path='movie/all' />
       </Route>
       <Route
         path='*'

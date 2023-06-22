@@ -1,9 +1,64 @@
 import { Link, useLocation } from "react-router-dom";
-import { menuItems } from "@/components/objects-variables/items";
+
+import {
+  MovieCreation,
+  AccessAlarmOutlined,
+  YouTube,
+  SubscriptionsOutlined,
+  SettingsOutlined,
+  LogoutOutlined,
+} from "@mui/icons-material";
 
 const Menu = () => {
+  const menuItems = [
+    {
+      names: "Menu",
+      childList: [
+        {
+          name: "Discover",
+          path: "/",
+          icons: <YouTube />,
+        },
+        {
+          name: "Movies",
+          path: "/movie/all",
+          icons: <MovieCreation />,
+        },
+        {
+          name: "Coming Soon",
+          path: "home/coming soon",
+          icons: <AccessAlarmOutlined />,
+        },
+      ],
+    },
+    {
+      names: "Library",
+      childList: [
+        {
+          name: "Watch List",
+          path: "/watchlist",
+          icons: <SubscriptionsOutlined />,
+        },
+      ],
+    },
+    {
+      names: "Settings",
+      childList: [
+        {
+          name: "Account Settings",
+          path: "/playlist",
+          icons: <SettingsOutlined />,
+        },
+        {
+          name: "Log Out",
+          path: "/logout",
+          icons: <LogoutOutlined />,
+        },
+      ],
+    },
+  ];
+
   const { pathname } = useLocation();
-  console.log(pathname);
 
   return (
     <div className='mt-[30px] flex flex-col gap-[40px]'>
