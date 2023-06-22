@@ -45,12 +45,12 @@ const WatchListComponents = memo(() => {
         size='small'
       />
       <div className='flex flex-col'>
-        <LazyLoadComponent style={{ overflowY: "scroll", height: "120px" }}>
+        <LazyLoadComponent>
           {userWl.map((item, index) => (
             <CardWithDetail
               key={index}
               data={item}
-              size='280px'
+              size='max-h-[260px]'
             />
           ))}
         </LazyLoadComponent>

@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect } from "react";
+import axios from "axios";
 
 interface Avatar<T> {
   gravatar: {
@@ -20,6 +21,7 @@ export interface User {
 type ActionType =
   | { type: "SET_USER_INFO"; payload: User | null }
   | { type: "LOGIN_ERROR"; payload: InvalidStatus | null }
+  | { type: "SET_SESSION"; payload: string }
   | { type: "LOGOUT"; payload: null };
 
 type SetPayload<T extends ActionType["type"]> = Extract<ActionType, { type: T }>["payload"];
@@ -32,6 +34,7 @@ export interface InvalidStatus {
 
 type TReducerState = {
   currentUser: User | null;
+  sessionId: string | null;
   error: InvalidStatus | null;
 };
 
@@ -39,11 +42,14 @@ interface TAuthContext {
   value: TReducerState;
   setCurrentUser: (payload: SetPayload<"SET_USER_INFO">) => void;
   setErrorMessage: (payload: SetPayload<"LOGIN_ERROR">) => void;
+  setSession: (payload: SetPayload<"SET_SESSION">) => void;
+  logOut: (payload: SetPayload<"LOGOUT">) => void;
 }
 
 const initialState: TReducerState = {
   currentUser: null,
   error: null,
+  sessionId: "",
 };
 
 const reducer = (state: TReducerState, action: ActionType): TReducerState => {
@@ -52,11 +58,14 @@ const reducer = (state: TReducerState, action: ActionType): TReducerState => {
       return { ...state, currentUser: action.payload };
     case "LOGIN_ERROR":
       return { ...state, error: action.payload };
+    case "SET_SESSION":
+      return { ...state, sessionId: action.payload };
     case "LOGOUT":
       return {
         ...state,
         currentUser: action.payload,
         error: action.payload,
+        sessionId: action.payload,
       };
     default:
       return { ...state };
@@ -76,17 +85,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "LOGIN_ERROR", payload: payload });
   };
 
-  const user = localStorage.getItem("currentUser");
+  const setSessionId = (payload: SetPayload<"SET_SESSION">) => {
+    dispatch({ type: "SET_SESSION", payload: payload });
+  };
+
+  const logOut = (payload: SetPayload<"LOGOUT">) => {
+    dispatch({ type: "LOGOUT", payload: payload });
+  };
+
+  const getAccountWithSession = async (sessionID: string) => {
+    const { data }: { data: User } = await axios.get(
+      `https://api.themoviedb.org/3/account?api_key=${
+        import.meta.env.VITE_API_KEY
+      }&session_id=${sessionID}`
+    );
+
+    setCurrentUser(data);
+  };
+
+  const getSession = sessionStorage.getItem("session");
 
   useEffect(() => {
-    if (user) setCurrentUser(JSON.parse(user));
+    if (getSession) {
+      setSessionId(getSession);
+      getAccountWithSession(getSession);
+    }
   }, []);
 
   useEffect(() => {
-    if (!state.currentUser) localStorage.setItem("currentUser", JSON.stringify(null));
+    // if (!getSession) setCurrentUser(null);
 
-    localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
-  }, [state.currentUser]);
+    if (state.sessionId) sessionStorage.setItem("session", state.sessionId);
+  }, [state.sessionId]);
 
   return (
     <AuthContext.Provider
@@ -94,6 +124,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         value: state,
         setCurrentUser: setCurrentUser,
         setErrorMessage: setErrorMessage,
+        setSession: setSessionId,
+        logOut: logOut,
       }}>
       {children}
     </AuthContext.Provider>

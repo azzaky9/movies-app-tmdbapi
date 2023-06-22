@@ -32,7 +32,6 @@ export const useMovies = (id?: number | string) => {
 
   const [movie, setMovie] = useState<DetailSourceMovies | null>(null);
   const [movieTrailer, setMovieTrailer] = useState<TrailerMoviesTypes[]>([]);
-  const [trailerPath, setTrailerPath] = useState("");
   const [movieSimiliar, setMovieSimiliar] = useState<StructuredReponseSource[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,17 +63,9 @@ export const useMovies = (id?: number | string) => {
     }
   };
 
-  const findKeyTrailer = () => {
-    const trailer = movieTrailer?.find((item) => item.type === "Trailer");
-    const path = `https://www.youtube.com/watch?v=${trailer?.key}`;
-
-    setTrailerPath(path);
-  };
-
   useEffect(() => {
     getSimiliarAndMovies();
-    findKeyTrailer();
   }, []);
 
-  return { isLoading, movie, movieSimiliar, trailerPath };
+  return { isLoading, movie, movieSimiliar, movieTrailer };
 };

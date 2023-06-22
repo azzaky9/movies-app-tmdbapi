@@ -14,6 +14,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import RoundedProfile from "./RoundedProfile";
+import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +60,8 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const { getCurrentUser } = useAuthenticateRequest();
+  const user = getCurrentUser();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -72,13 +75,17 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleMenuClose = () => {
-    navigate("/sign-in");
+    // navigate("/sign-in");
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleClick = () => {
+    return user ? null : navigate("/sign-in");
   };
 
   const menuId = "primary-search-account-menu";
@@ -97,8 +104,8 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleClick}>{user ? "Profile" : "Login"}</MenuItem>
+      {user ? <MenuItem onClick={handleMenuClose}>My account</MenuItem> : null}
     </Menu>
   );
 
@@ -124,7 +131,7 @@ export default function PrimarySearchAppBar() {
           aria-label='show 4 new mails'
           color='inherit'>
           <Badge
-            badgeContent={4}
+            badgeContent={1}
             color='error'>
             <MailIcon />
           </Badge>

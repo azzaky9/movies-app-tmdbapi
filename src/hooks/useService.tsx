@@ -1,54 +1,55 @@
-import { useState, useCallback } from "react";
-import axios from "axios";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
 import { DetailSourceMovies } from "./useMovies";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { useSnackbar } from "notistack";
 
 export const useService = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { value } = useContext(AuthContext);
+  const { currentUser, sessionId } = value;
+  const { enqueueSnackbar } = useSnackbar();
 
+  const endpoint = `https://api.themoviedb.org/3/account/${
+    currentUser?.id
+  }/watchlist/movies?api_key=${import.meta.env.VITE_API_KEY}&session_id=${sessionId}`;
+
+  console.log(endpoint);
   const fetchSourceUserHave = async () => {
     setIsLoading(true);
 
-    const config = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/account/18942456/watchlist/movies",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWMwNDIzMmRhYTU3YmE1MTY1MTE0YmFiN2MxMGYwYyIsInN1YiI6IjY0M2E2YWZlZTMyOTQzMDU4MGY5YWM3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nNAQQ5lKeE9ASJczWAdkvH0HoK-ZH2nxZHoxefLEeK4",
-      },
-    };
-
-    const { data }: { data: { results: DetailSourceMovies[] } } = await axios.request(config);
-
-    console.log(data.results);
+    const { data }: { data: { results: DetailSourceMovies[] } } = await axios.get(endpoint);
 
     setIsLoading(false);
 
     return data.results;
   };
 
-  const postWatchList = useCallback(async (id: number) => {
-    console.log("clicked");
-
+  const postWatchList = async (id: number) => {
     const config = {
       method: "POST",
-      url: `https://api.themoviedb.org/3/account/18942456/watchlist`,
+      url: `https://api.themoviedb.org/3/account/${currentUser?.id}/watchlist?api_key=${
+        import.meta.env.VITE_API_KEY
+      }&session_id=${sessionId}`,
       headers: {
         accept: "application/json",
         "content-type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWMwNDIzMmRhYTU3YmE1MTY1MTE0YmFiN2MxMGYwYyIsInN1YiI6IjY0M2E2YWZlZTMyOTQzMDU4MGY5YWM3MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nNAQQ5lKeE9ASJczWAdkvH0HoK-ZH2nxZHoxefLEeK4",
       },
       data: { media_type: "movie", media_id: id, watchlist: true },
     };
-    try {
-      const response = await axios.request(config);
 
-      console.log(response);
+    try {
+      await axios.request(config);
+
+      enqueueSnackbar("Successfully added", { variant: "success" });
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError) {
+        const response: { status_message: string } = error.response?.data;
+        enqueueSnackbar(response.status_message, { variant: "error" });
+      }
     }
-  }, []);
+  };
 
   return { postWatchList, isLoading, fetchSourceUserHave };
 };

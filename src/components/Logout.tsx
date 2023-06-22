@@ -5,9 +5,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+// import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Logout = () => {
+  // const { logOut } = useContext(AuthContext)
   const { logoutCurrentUser } = useAuthenticateRequest();
   const location = useLocation();
   const navigate = useNavigate();

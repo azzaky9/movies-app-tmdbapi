@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { WhatshotOutlined } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import DisplayPopular from "./common/Banner/DisplayPopular";
@@ -14,7 +13,7 @@ export interface TMoviesResponse {
   total_pages: number;
 }
 
-const HomeComponent = memo(function HomeComponent() {
+const HomeComponent = function HomeComponent() {
   const { popularMovies, topRatedMovies, isRequestDone } = useContext(MoviesContext);
 
   return (
@@ -54,6 +53,6 @@ const HomeComponent = memo(function HomeComponent() {
       </div>
     </Stack>
   );
-});
+};
 
 export default HomeComponent;

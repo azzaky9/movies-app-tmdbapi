@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "@/theme";
 import { AuthProvider } from "./context/AuthContext";
 import { SourceMoviesProvider } from "./context/MoviesContext";
+import { SnackbarProvider } from "notistack";
 import "@/index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -12,7 +13,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider theme={theme}>
       <AuthProvider>
         <SourceMoviesProvider>
-          <App />
+          <SnackbarProvider
+            autoHideDuration={3000}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+            <App />
+          </SnackbarProvider>
         </SourceMoviesProvider>
       </AuthProvider>
     </ThemeProvider>

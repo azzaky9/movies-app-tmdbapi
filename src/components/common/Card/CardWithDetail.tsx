@@ -43,7 +43,7 @@ const CardWithDetail: React.FC<CardWithDetailProp> = ({ data, size, transparent 
         ) : null}
       </div>
       <img
-        className={`max-h-[${size}] rounded-l-lg`}
+        className={`${size} rounded-l-lg`}
         src={`https://image.tmdb.org/t/p/original${data?.poster_path}`}
         alt='poster-review'
       />

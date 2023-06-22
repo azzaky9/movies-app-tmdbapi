@@ -7,21 +7,29 @@ import Movies from "./common/Movies/Movies";
 const ShowDetail = () => {
   const { moviesId } = useParams();
 
-  const { isLoading, movie, trailerPath, movieSimiliar } = useMovies(moviesId);
+  const { isLoading, movie, movieTrailer, movieSimiliar } = useMovies(moviesId);
+
+  const findKeyTrailer = () => {
+    const findKey = movieTrailer.find((item) => item.type === "Trailer");
+
+    return findKey?.key;
+  };
+
+  const key = findKeyTrailer();
 
   return (
     <div className='p-10'>
       <ReactPlayer
         width='100%'
         height={760}
-        url={trailerPath}
+        url={`https://www.youtube.com/watch?v=${key}`}
         controls={true}
         playing={true}
         loop={true}
       />
       <CardWithDetail
         data={movie}
-        size='380px'
+        size='max-h-[380px]'
         transparent
       />
       <ul className='flex gap-5 px-10'>

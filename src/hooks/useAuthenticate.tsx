@@ -2,6 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { AuthContext, User } from "@/context/AuthContext";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 export type TConfigurationRequest<T> = {
   method: "GET" | "PUT" | "POST";
@@ -20,9 +21,10 @@ type TAuthLogin<K> = TConfigurationRequest<K> & TAuthWithUsernamePw;
 
 const useAuthenticateRequest = () => {
   const [isRequestDone, setIsRequestDone] = useState(false);
-  const { setCurrentUser, setErrorMessage, value } = useContext(AuthContext);
+  const { setCurrentUser, setErrorMessage, setSession, logOut, value } = useContext(AuthContext);
   const { currentUser, error } = value;
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   type THeaderRequest = typeof headerRequest;
 
@@ -39,7 +41,7 @@ const useAuthenticateRequest = () => {
   };
 
   const loginWithAuthenticate = async (username: string, password: string) => {
-    type ResponseTokens = AxiosResponse<{ request_token: string }>;
+    type ResponseTokens = AxiosResponse<{ request_token: string; expires_at: string }>;
 
     setIsRequestDone(true);
     try {
@@ -55,7 +57,6 @@ const useAuthenticateRequest = () => {
           request_token: requestToken.data.request_token,
         },
       };
-      // const { data } = await axios.request(configGetApprovedToken);
       const getApprovedToken: ResponseTokens = await axios.request(configGetApprovedToken);
 
       const configAuthGetSession: TAuthLogin<THeaderRequest> = {
@@ -73,14 +74,17 @@ const useAuthenticateRequest = () => {
         configAuthGetSession
       );
 
+      const sessionTokens = authenticateUser.data.session_id;
+
+      setSession(sessionTokens);
+
       const { data }: { data: User } = await axios.get(
-        `https://api.themoviedb.org/3/account?api_key=${import.meta.env.VITE_API_KEY}&session_id=${
-          authenticateUser.data.session_id
-        }`
+        `https://api.themoviedb.org/3/account?api_key=${
+          import.meta.env.VITE_API_KEY
+        }&session_id=${sessionTokens}`
       );
 
       setCurrentUser(data);
-
       setIsRequestDone(false);
 
       navigate("/");
@@ -102,7 +106,11 @@ const useAuthenticateRequest = () => {
     return error ? error : null;
   }, [error]);
 
-  const logoutCurrentUser = () => setCurrentUser(null);
+  const logoutCurrentUser = () => {
+    logOut(null);
+    sessionStorage.removeItem("session");
+    enqueueSnackbar("Completely Logged Out", { variant: "info" });
+  };
 
   return {
     loginWithAuthenticate,
