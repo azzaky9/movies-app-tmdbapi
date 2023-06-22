@@ -13,12 +13,12 @@ export const menuItems = [
     childList: [
       {
         name: "Discover",
-        path: "/home/discover",
+        path: "/",
         icons: <YouTube />,
       },
       {
-        name: "Top 10 Movies",
-        path: "/home/top movies",
+        name: "Movies",
+        path: "/movies",
         icons: <LocalFireDepartmentOutlined />,
       },
       {

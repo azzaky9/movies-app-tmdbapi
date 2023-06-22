@@ -1,8 +1,8 @@
 import { WhatshotOutlined } from "@mui/icons-material";
 import { Stack } from "@mui/material";
-import DisplayPopular from "./common/Banner/DisplayPopular";
-import Movies from "./common/Movies/Movies";
-import LinkAll from "./common/utils/LinkAll";
+import DisplayPopular from "../common/Banner/DisplayPopular";
+import Movies from "../common/Movies/Movies";
+import LinkAll from "../common/utils/LinkAll";
 import { StructuredReponseSource } from "@/types";
 import { useContext } from "react";
 import { MoviesContext } from "@/context/MoviesContext";

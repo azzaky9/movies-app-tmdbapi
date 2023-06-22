@@ -1,5 +1,5 @@
 import React from "react";
-import { TAutenticateData } from "@/components/LoginComponent";
+import { TAutenticateData } from "@/components/pagesComponent/LoginComponent";
 import InputForm from "./InputForm";
 
 type TInputGroupsProps = {

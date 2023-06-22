@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { menuItems } from "@/components/objects-variables/items";
 
 const Menu = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
+
   return (
     <div className='mt-[30px] flex flex-col gap-[40px]'>
       {menuItems.map(({ names, childList }, index) => (
@@ -10,7 +13,9 @@ const Menu = () => {
           <div className='flex flex-col gap-[26px]'>
             {childList.map(({ name, path, icons }) => (
               <li
-                className='flex gap-3 text-secondary hover-link'
+                className={`flex gap-3 hover-link  ${
+                  pathname === path ? "text-accent" : "text-secondary"
+                }`}
                 key={name}>
                 {icons}
                 <Link

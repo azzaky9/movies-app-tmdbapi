@@ -5,14 +5,16 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { enqueueSnackbar } from "notistack";
 // import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 const Logout = () => {
   // const { logOut } = useContext(AuthContext)
-  const { logoutCurrentUser } = useAuthenticateRequest();
+  const { logoutCurrentUser, getCurrentUser } = useAuthenticateRequest();
   const location = useLocation();
   const navigate = useNavigate();
+  const user = getCurrentUser();
 
   const handleDisagreeResponse = () => navigate("/");
 
@@ -21,6 +23,11 @@ const Logout = () => {
     navigate("/");
   };
 
+  if (!user) {
+    enqueueSnackbar("Dont have any account to logout", { variant: "info" });
+
+    return <Navigate to='/' />;
+  }
   return (
     <div>
       <Dialog

@@ -13,7 +13,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import RoundedProfile from "./RoundedProfile";
+import RoundedProfile from "@/components/common/utils/RoundedProfile";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 
 const Search = styled("div")(({ theme }) => ({

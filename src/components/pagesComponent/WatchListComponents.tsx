@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 import { useService } from "@/hooks/useService";
 import { AxiosError } from "axios";
-import CardWithDetail from "./common/Card/CardWithDetail";
+import CardWithDetail from "@/components/common/Card/CardWithDetail";
 import { DetailSourceMovies } from "@/hooks/useMovies";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { Chip } from "@mui/material";

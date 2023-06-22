@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { useMovies } from "@/hooks/useMovies";
 import CardWithDetail from "@/components/common/Card/CardWithDetail";
-import Movies from "./common/Movies/Movies";
+import Movies from "../common/Movies/Movies";
 
 const ShowDetail = () => {
   const { moviesId } = useParams();

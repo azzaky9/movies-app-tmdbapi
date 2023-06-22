@@ -1,8 +1,8 @@
-import Menu from "./common/Sidebar/Menu";
-import Brands from "./common/Sidebar/Brands";
+import Menu from "../common/Sidebar/Menu";
+import Brands from "../common/Sidebar/Brands";
 import { MenuOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { useToggle } from "../hooks/useToggle";
+import { useToggle } from "../../hooks/useToggle";
 
 const Sidebar = () => {
   const { isOpen, setIsOpen } = useToggle();

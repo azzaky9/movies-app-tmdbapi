@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
-import Brands from "./common/Sidebar/Brands";
-import InputGroups from "./common/FormUtils/InputGroups";
+import Brands from "../common/Sidebar/Brands";
+import InputGroups from "../common/FormUtils/InputGroups";
 import { LoadingButton } from "@mui/lab";
 import { Login } from "@mui/icons-material";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";

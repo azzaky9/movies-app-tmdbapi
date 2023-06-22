@@ -88,6 +88,10 @@ const useAuthenticateRequest = () => {
       setIsRequestDone(false);
 
       navigate("/");
+
+      enqueueSnackbar(`Good to see you ${data.name ? data.name : data.username}`, {
+        variant: "info",
+      });
     } catch (error) {
       if (error instanceof AxiosError) setErrorMessage(error?.response?.data);
 
@@ -107,9 +111,11 @@ const useAuthenticateRequest = () => {
   }, [error]);
 
   const logoutCurrentUser = () => {
-    logOut(null);
-    sessionStorage.removeItem("session");
-    enqueueSnackbar("Completely Logged Out", { variant: "info" });
+    if (currentUser) {
+      logOut(null);
+      sessionStorage.removeItem("session");
+      enqueueSnackbar("Completely Logged Out", { variant: "success" });
+    }
   };
 
   return {

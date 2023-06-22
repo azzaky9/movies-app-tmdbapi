@@ -1,4 +1,4 @@
-import LoginComponent from "../components/LoginComponent";
+import LoginComponent from "../components/pagesComponent/LoginComponent";
 import { Navigate } from "react-router-dom";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 

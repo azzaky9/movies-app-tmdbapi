@@ -3,8 +3,8 @@ import Layout from "@/layouts/Layout";
 import Login from "@/pages/LoginPage";
 import TvShowPage from "@/pages/TvShowPage";
 import ErrorPage from "@/pages/404Page";
-import ShowDetail from "@/components/ShowDetail";
-import Logout from "@/components/Logout";
+import { Logout } from "@/components/common/utils/index";
+import ShowDetail from "@/components/pagesComponent/ShowDetail";
 import WatchListPage from "./pages/WatchListPage";
 
 export const route = createBrowserRouter(
