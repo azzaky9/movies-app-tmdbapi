@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 
 export const useService = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +17,7 @@ export const useService = () => {
     currentUser?.id
   }/watchlist/movies?api_key=${import.meta.env.VITE_API_KEY}&session_id=${sessionId}`;
 
-  const action = (snackbarId) => (
+  const action = () => (
     <>
       <button
         className='px-3 mx-1 py-2 rounded-md bg-input-only bg-opacity-0 duration-300 hover:bg-opacity-25 text-blue-600 font-semibold uppercase'
@@ -36,11 +35,19 @@ export const useService = () => {
   const fetchSourceUserHave = async () => {
     setIsLoading(true);
 
-    const { data }: { data: { results: DetailSourceMovies[] } } = await axios.get(endpoint);
+    try {
+      const { data }: { data: { results: DetailSourceMovies[] } } = await axios.get(endpoint);
 
-    setIsLoading(false);
+      setIsLoading(false);
+      return data.results;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        const response: { status_message: string } = e.response?.data;
+        enqueueSnackbar(response.status_message, { action });
+      }
 
-    return data.results;
+      setIsLoading(false);
+    }
   };
 
   const postWatchList = async (id: number) => {

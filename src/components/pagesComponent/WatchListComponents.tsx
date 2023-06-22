@@ -1,12 +1,11 @@
 import { memo, useEffect, useState } from "react";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 import { useService } from "@/hooks/useService";
-import { AxiosError } from "axios";
 import CardWithDetail from "@/components/common/Card/CardWithDetail";
 import { DetailSourceMovies } from "@/hooks/useMovies";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { Chip } from "@mui/material";
-import { Theaters } from "@mui/icons-material";
+import { Chip, CircularProgress } from "@mui/material";
+import { Theaters, DataArray } from "@mui/icons-material";
 
 const WatchListComponents = memo(() => {
   const { getCurrentUser } = useAuthenticateRequest();
@@ -16,13 +15,9 @@ const WatchListComponents = memo(() => {
   const user = getCurrentUser();
 
   const getUserWl = async () => {
-    try {
-      const data = await fetchSourceUserHave();
+    const data = await fetchSourceUserHave();
 
-      if (data) setUserWl(data);
-    } catch (e) {
-      if (e instanceof AxiosError) console.log(e);
-    }
+    if (data) setUserWl(data);
   };
 
   useEffect(() => {
@@ -30,7 +25,25 @@ const WatchListComponents = memo(() => {
   }, []);
 
   if (isLoading) {
-    return <p>Wait . . .</p>;
+    return (
+      <div className='w-full h-full grid place-content-center'>
+        <CircularProgress sx={{ color: "#717171" }} />
+      </div>
+    );
+  }
+
+  if (userWl.length === 0) {
+    return (
+      <div className='text-secondary w-full h-full flex flex-col justify-center items-center text-[10rem]'>
+        <DataArray
+          fontSize='inherit'
+          sx={{ opacity: 0.2 }}
+        />
+        <p className='text-sm text-center'>
+          {user ? "No one here's try to adding Watchlist" : "Login for access your watchlist"}
+        </p>
+      </div>
+    );
   }
 
   return (

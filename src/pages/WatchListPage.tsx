@@ -1,4 +1,4 @@
-import WatchListComponent from "@/components/WatchListComponents";
+import WatchListComponent from "@/components/pagesComponent/WatchListComponents";
 
 const WatchListPage = () => {
   return <WatchListComponent />;
