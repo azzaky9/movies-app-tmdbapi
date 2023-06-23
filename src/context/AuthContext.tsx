@@ -16,6 +16,7 @@ export interface User {
   name: string | undefined;
   include_path: boolean;
   username: string;
+  iso_639_1: string;
 }
 
 type ActionType =
@@ -93,19 +94,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "LOGOUT", payload: payload });
   };
 
-  const getAccountWithSession = async (sessionID: string) => {
-    const { data }: { data: User } = await axios.get(
-      `https://api.themoviedb.org/3/account?api_key=${
-        import.meta.env.VITE_API_KEY
-      }&session_id=${sessionID}`
-    );
-
-    setCurrentUser(data);
-  };
-
-  const getSession = sessionStorage.getItem("session");
-
   useEffect(() => {
+    const getAccountWithSession = async (sessionID: string) => {
+      const { data }: { data: User } = await axios.get(
+        `https://api.themoviedb.org/3/account?api_key=${
+          import.meta.env.VITE_API_KEY
+        }&session_id=${sessionID}`
+      );
+
+      setCurrentUser(data);
+    };
+
+    const getSession = sessionStorage.getItem("session");
+
     if (getSession) {
       setSessionId(getSession);
       getAccountWithSession(getSession);

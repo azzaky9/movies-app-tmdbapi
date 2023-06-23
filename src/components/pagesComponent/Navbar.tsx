@@ -1,57 +1,48 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import { AppBar, Box, Toolbar, IconButton, Badge, MenuItem } from "@mui/material";
+import Menu, { MenuProps } from "@mui/material/Menu";
+import { Notifications, MoreVert, AutoAwesome, InfoOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import RoundedProfile from "@/components/common/utils/RoundedProfile";
 import { useAuthenticateRequest } from "@/hooks/useAuthenticate";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    backgroundColor: "#131212",
+    color: "white",
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      alignItems: "start",
+      padding: "12px",
+    },
+    "& .MuiMenuItem-root": {
+      width: "420px",
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.neutral.main,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+      },
     },
   },
 }));
@@ -63,7 +54,7 @@ export default function PrimarySearchAppBar() {
   const { getCurrentUser } = useAuthenticateRequest();
   const userSource = getCurrentUser();
 
-  const isMenuOpen = Boolean(anchorEl);
+  const isOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -75,7 +66,6 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleMenuClose = () => {
-    // navigate("/sign-in");
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -85,12 +75,17 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleClick = () => {
-    return userSource ? null : navigate("/sign-in");
+    if (userSource) {
+      handleMenuClose();
+      return navigate("/account");
+    }
+    navigate("/sign-in");
   };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
-    <Menu
+    <StyledMenu
+      sx={{ width: "fit-content" }}
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: "top",
@@ -102,11 +97,34 @@ export default function PrimarySearchAppBar() {
         vertical: "top",
         horizontal: "right",
       }}
-      open={isMenuOpen}
+      open={isOpen && anchorEl?.id === "rounded-profile-button"}
       onClose={handleMenuClose}>
-      <MenuItem onClick={handleClick}>{userSource ? "Profile" : "Login"}</MenuItem>
-      {userSource ? <MenuItem onClick={handleMenuClose}>My account</MenuItem> : null}
-    </Menu>
+      <MenuItem onClick={handleClick}>{userSource ? "My Account" : "Login"}</MenuItem>
+    </StyledMenu>
+  );
+  const notificationId = "notification-menu-id";
+  const renderNotificationUser = (
+    <StyledMenu
+      id={notificationId}
+      anchorEl={anchorEl}
+      open={isOpen && anchorEl?.id === "notification-button"}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      onClose={handleMenuClose}>
+      <MenuItem>How to use this app ?</MenuItem>
+      <MenuItem sx={{ whiteSpace: "normal", fontSize: "14px", color: "rgba(255, 255, 255, 0.4)" }}>
+        <AutoAwesome />
+        Try to adding new watchlist movie you want, with click watchlist icons when you hover
+        posters
+      </MenuItem>
+      <MenuItem sx={{ whiteSpace: "normal", fontSize: "14px", color: "rgba(255, 255, 255, 0.4)" }}>
+        <InfoOutlined />
+        Try to see detail movie with click play button on the movie poster, on their you can see
+        Trailer, Similar Movie, etc...
+      </MenuItem>
+    </StyledMenu>
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -128,28 +146,14 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton
           size='large'
-          aria-label='show 4 new mails'
-          color='inherit'>
-          <Badge
-            badgeContent={1}
-            color='error'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size='large'
           aria-label='show 17 new notifications'
           color='inherit'>
           <Badge
-            badgeContent={17}
+            badgeContent={2}
             color='error'>
-            <NotificationsIcon />
+            <Notifications />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -172,38 +176,24 @@ export default function PrimarySearchAppBar() {
         color='transparent'
         sx={{ p: 2, boxShadow: "none" }}>
         <Toolbar sx={{ paddingLeft: "45px" }}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder='Search…'
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {userSource ? (
+              <IconButton
+                id='notification-button'
+                onClick={handleProfileMenuOpen}
+                size='large'
+                color='inherit'>
+                <Badge
+                  badgeContent={2}
+                  color='error'>
+                  <Notifications />
+                </Badge>
+              </IconButton>
+            ) : null}
+
             <IconButton
-              size='large'
-              aria-label='show 4 new mails'
-              color='inherit'>
-              <Badge
-                badgeContent={4}
-                color='error'>
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size='large'
-              aria-label='show 17 new notifications'
-              color='inherit'>
-              <Badge
-                badgeContent={17}
-                color='error'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
+              id='rounded-profile-button'
               size='large'
               edge='end'
               aria-label='account of current user'
@@ -222,13 +212,14 @@ export default function PrimarySearchAppBar() {
               aria-haspopup='true'
               onClick={handleMobileMenuOpen}
               color='inherit'>
-              <MoreIcon />
+              <MoreVert />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {userSource ? renderNotificationUser : null}
     </div>
   );
 }

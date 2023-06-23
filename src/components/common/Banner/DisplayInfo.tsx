@@ -1,22 +1,18 @@
 import { InfoPropTypes } from "@/types";
-import { BookmarkButton } from "@/components/common/Movies/MoviesInfo";
 import { PlayArrow } from "@mui/icons-material";
 import { Title } from "@/components/common/utils";
-import { useGenre } from "@/hooks/useGenre";
 import imdbLogo from "/imdb-logo.svg";
 import { useNavigate } from "react-router-dom";
 
 const DisplayInfo: React.FC<InfoPropTypes> = ({ date, title, rating, genre, id }) => {
-  const { genreNames } = useGenre(genre);
   const navigate = useNavigate();
 
   return (
     <>
       <div className='w-[400px] text-white p-10 absolute bottom-0 z-40'>
+        <span className='hidden'>{genre}</span>
         <ul className='flex gap-3'>
-          <li>{genreNames[0]}</li>
-          <li>{genreNames[1]}</li>
-          <span className='text-accent'>&middot; Movies</span>{" "}
+          <span className='text-accent font-semibold'>Movies</span>{" "}
         </ul>
         <Title
           date={date}
@@ -31,7 +27,6 @@ const DisplayInfo: React.FC<InfoPropTypes> = ({ date, title, rating, genre, id }
             <PlayArrow />
             Detail Movie
           </button>
-          <BookmarkButton />
         </div>
       </div>
       <div className='absolute top-0 right-0 px-10 py-8'>

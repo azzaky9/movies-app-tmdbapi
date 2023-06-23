@@ -14,13 +14,13 @@ const WatchListComponents = memo(() => {
 
   const user = getCurrentUser();
 
-  const getUserWl = async () => {
-    const data = await fetchSourceUserHave();
-
-    if (data) setUserWl(data);
-  };
-
   useEffect(() => {
+    const getUserWl = async () => {
+      const data = await fetchSourceUserHave();
+
+      if (data) setUserWl(data);
+    };
+
     getUserWl();
   }, []);
 

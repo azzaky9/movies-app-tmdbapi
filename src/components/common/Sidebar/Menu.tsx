@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 
 import {
   MovieCreation,
-  AccessAlarmOutlined,
   YouTube,
   SubscriptionsOutlined,
   SettingsOutlined,
@@ -24,11 +23,6 @@ const Menu = () => {
           path: "/movie/all",
           icons: <MovieCreation />,
         },
-        {
-          name: "Coming Soon",
-          path: "home/coming soon",
-          icons: <AccessAlarmOutlined />,
-        },
       ],
     },
     {
@@ -46,7 +40,7 @@ const Menu = () => {
       childList: [
         {
           name: "Account Settings",
-          path: "/playlist",
+          path: "/account",
           icons: <SettingsOutlined />,
         },
         {

@@ -18,7 +18,7 @@ const MoviesInfo: React.FC<InfoPropTypes> = ({ title, date, genre, id }) => {
     genreNames?.length > 1 ? `${genreNames.at(0)} / ${genreNames.at(1)}` : `${genreNames.at(0)}`;
 
   return (
-    <div className='absolute bottom-0 w-full p-3'>
+    <div className='absolute   bottom-0 w-full p-3 '>
       <span className='text-accent'>{genreText}</span>
       <Title
         title={title}

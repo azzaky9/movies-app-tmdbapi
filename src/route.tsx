@@ -6,6 +6,8 @@ import ErrorPage from "@/pages/404Page";
 import { Logout } from "@/components/common/utils/index";
 import ShowDetail from "@/components/pagesComponent/ShowDetail";
 import WatchListPage from "./pages/WatchListPage";
+import AccountPage from "./pages/AccountPage";
+import MovieListPages from "./pages/MovieListPages";
 
 export const route = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +35,14 @@ export const route = createBrowserRouter(
           path='watchlist'
           element={<WatchListPage />}
         />
-        <Route path='movie/all' />
+        <Route
+          path='movie/all'
+          element={<MovieListPages />}
+        />
+        <Route
+          path='account'
+          element={<AccountPage />}
+        />
       </Route>
       <Route
         path='*'

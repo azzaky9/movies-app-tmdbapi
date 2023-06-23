@@ -43,7 +43,7 @@ interface TMoviesContext {
   topRatedMovies: StructuredReponseSource[];
   genre: TResponseGenres[];
   error: AxiosError;
-  isRequestDone: boolean;
+  isLoading: boolean;
 }
 
 export const MoviesContext = createContext<TMoviesContext>({} as TMoviesContext);
@@ -57,13 +57,13 @@ const endPoint = [
 ];
 
 export const SourceMoviesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isFetchingDone, setIsFetchingDone] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [sourceMovies, setSourceMovies] = useState<StructuredReponseSource[][]>([]);
   const [genres, setGenres] = useState<TResponseGenres[]>([]);
   const [error, setError] = useState<any | unknown>();
 
   const getAllSourceMovie = async () => {
-    setIsFetchingDone(true);
+    setIsLoading(true);
     try {
       const getSourceMovie = endPoint.map((url) =>
         axios.get(url).then((res: AxiosResponse<TMoviesResponse>) => res)
@@ -79,11 +79,11 @@ export const SourceMoviesProvider = ({ children }: { children: React.ReactNode }
 
       setGenres(data.genres);
 
-      setIsFetchingDone(false);
+      setIsLoading(false);
     } catch (err) {
       if (err instanceof AxiosError) setError(err.response?.data);
 
-      setIsFetchingDone(false);
+      setIsLoading(false);
     }
   };
 
@@ -98,7 +98,7 @@ export const SourceMoviesProvider = ({ children }: { children: React.ReactNode }
         popularMovies: sourceMovies[0],
         genre: genres,
         error: error,
-        isRequestDone: isFetchingDone,
+        isLoading: isLoading,
       }}>
       {children}
     </MoviesContext.Provider>

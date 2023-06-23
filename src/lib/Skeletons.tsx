@@ -26,7 +26,7 @@ export const SkeletonText: React.FC<PropTypes> = ({ count, size, skeletonSizeLis
 
 export const CoverSkeleton = () => {
   return (
-    <div className='h-[330px] '>
+    <div className='h-[330px]'>
       <div className='bg-input-only w-[220px] max-w-[400px] h-[320px] rounded-2xl p-2 pt-5'>
         <Skeleton
           variant='rectangular'
